@@ -1,0 +1,42 @@
+{% extends "design.html" %}
+{% block body %}
+<nav class="">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Flask-LeBonCoin</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/register">S'inscrire</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <form method=POST action="{{ url_for('login') }}">
+                <div class="form-group">
+                    <br><br><br>
+                    <label for="exampleInputEmail1">Nom de compte</label>
+                    <input type="text" class="form-control" name="username" placeholder="Nom de compte">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Mot de passe</label>
+                    <input type="password" class="form-control" name="pass" placeholder="Mot de passe">
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Se Connecter</button>
+            </form>
+            <br>
+        </div>
+    </div>
+</div>
+{% endblock %}
