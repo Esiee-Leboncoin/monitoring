@@ -28,6 +28,8 @@ class MongoDB():
     def find_all(self, _id=False, last=False):
         d = dict()
         for coll in self.get_collection_name():
+            if coll == "users":
+                continue
             d[coll] = self.find(coll, _id, last)
         return d
 
