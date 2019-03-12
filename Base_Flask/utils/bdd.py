@@ -10,9 +10,10 @@ class MongoDB():
         #Return all collection names
         return self.db.list_collection_names()
 
-    def find_collection(self, collection, _id=False, last=False):
-        #return a cursor of documents of a specific collection, by default the function
-        #doesn't select the _id field
+    def find(self, collection, _id=False, last=False):
+        #by default the function doesn't select the _id field
+        #retourne une list de dictionaire last=False
+        #retourne un dictionaire si last=True
         if _id == False:
             cursor = self.db[collection].find({}, {'_id': False})
         else:
@@ -20,8 +21,21 @@ class MongoDB():
 
         if last == True:
             cursor = cursor.sort([("Time", -1)]).limit(1)
+            return cursor[0]
 
-        return cursor
+        return self.cursor_to_dict(cursor)
+
+    def find_all(self, _id=False, last=False):
+        d = dict()
+        for coll in self.get_collection_name():
+            d[coll] = self.find(coll, _id, last)
+        return d
+
+    def cursor_to_dict(self, cursor):
+        l = list()
+        for i in cursor:
+            l.append(i)
+        return l
 
     def get_keys(self, collection):
         #Return all field name of a collection
