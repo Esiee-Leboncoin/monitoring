@@ -33,6 +33,15 @@ class MongoDB():
             d[coll] = self.find(coll, _id, last)
         return d
 
+    def insert(self, item):
+        try:
+            #Insertion de l'item dans la base de données
+            self.db[self.collection_name].insert_one(item)
+            return 1
+        except:
+            print("Item non importé")
+            return -1
+
     def cursor_to_dict(self, cursor):
         l = list()
         for i in cursor:
