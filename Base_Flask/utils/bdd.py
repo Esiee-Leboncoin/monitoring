@@ -10,14 +10,14 @@ class MongoDB():
         #Return all collection names
         return self.db.list_collection_names()
 
-    def find(self, collection, _id=False, last=False):
+    def find(self, collection, what=dict(), _id=False, last=False):
         #by default the function doesn't select the _id field
         #retourne une list de dictionaire last=False
         #retourne un dictionaire si last=True
         if _id == False:
-            cursor = self.db[collection].find({}, {'_id': False})
+            cursor = self.db[collection].find(what, {'_id': False})
         else:
-            cursor = self.db[collection].find()
+            cursor = self.db[collection].find(what)
 
         if last == True:
             cursor = cursor.sort([("Time", -1)]).limit(1)
@@ -25,18 +25,18 @@ class MongoDB():
 
         return self.cursor_to_dict(cursor)
 
-    def find_all(self, _id=False, last=False):
+    def find_all_last(self, what=dict(), _id=False, last=False):
         d = dict()
         for coll in self.get_collection_name():
             if coll == "users":
                 continue
-            d[coll] = self.find(coll, _id, last)
+            d[coll] = self.find(coll, what, _id, last)
         return d
 
-    def insert(self, item):
+    def insert(self, collection, item):
         try:
             #Insertion de l'item dans la base de données
-            self.db[self.collection_name].insert_one(item)
+            self.db[collection].insert_one(item)
             return 1
         except:
             print("Item non importé")
