@@ -2,7 +2,7 @@
 from flask import Flask, render_template, url_for, request, session, redirect
 
 import config
-from utils import bdd
+from utils import bdd, graph
 
 # Initialisation et chargment du fichier Config
 app = Flask(__name__)
@@ -63,41 +63,3 @@ def error_login():
 def deconnection():
     del session['username']
     return redirect('/')
-
-import matplotlib.pyplot as plt
-
-def create_histo(collec_pipe_name):
-
-    # REGRESSION
-    if(docs[0]['R2'] != None):
-        # Initialisation listes
-        all_indices = ['R2', 'RMSE', 'Cross_val']
-        all_graphs = []
-
-        for j in all_indices :
-            indice_liste = []
-            date_liste = []
-            for i in docs :
-                indice_liste.append(i[j])
-                date_liste.append(i['Time'])
-
-            graph_indice = get_graph(date_liste, indice_liste, collec_pipe_name, j)
-            all_graphs.append(graph_indice)
-
-    # CLASSIFICATION
-    elif (docs[0]['Confu'] != None):
-        print('Classif')
-        return 0
-
-    return all_graphs
-
-
-#
-def get_graph(date_liste, indice_liste, collec_pipe_name, type_indice):
-
-    graph = plt.plot(date_liste, indice_liste)
-
-    fig, ax = plt.subplots()
-    ax.plot(date_liste, indice_liste)
-    fig.savefig("static/" + str(collec_pipe_name) + "_" + str(type_indice) + ".png")
-    return graph
