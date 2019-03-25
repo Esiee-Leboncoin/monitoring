@@ -8,7 +8,7 @@ class MongoDB():
 
     def get_collection_name(self):
         #Return all collection names
-        return self.db.list_collection_names()
+        return self.db.collection_names()
 
     def find(self, collection, what=dict(), _id=False, last=False):
         #by default the function doesn't select the _id field
@@ -22,7 +22,8 @@ class MongoDB():
         if last == True:
             cursor = cursor.sort([("Time", -1)]).limit(1)
             return cursor[0]
-
+        a = self.cursor_to_dict(cursor)
+        print(a)
         return self.cursor_to_dict(cursor)
 
     def find_all_last(self, what=dict(), _id=False, last=False):

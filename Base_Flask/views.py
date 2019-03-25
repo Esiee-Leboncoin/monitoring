@@ -41,7 +41,7 @@ def register():
 def login():
     login_user = mongo.find("users", {'name' : request.form['username']})[0]
 
-    if login_user :
+    if len(login_user) != 0 :
         if (request.form['pass'].encode('utf-8') == login_user['password'].encode('utf-8')):
             session['username'] = request.form['username']
             return redirect('/')
