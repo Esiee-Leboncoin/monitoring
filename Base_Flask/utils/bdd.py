@@ -33,7 +33,7 @@ class MongoDB():
             d[coll] = self.find(coll, what, _id, last)
         return d
 
-    def insert(self, collection, item):
+    def insert_one(self, collection, item):
         try:
             #Insertion de l'item dans la base de données
             self.db[collection].insert_one(item)
