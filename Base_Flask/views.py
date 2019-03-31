@@ -27,8 +27,8 @@ def register():
     if request.method == 'POST':
         existing_user = mongo.find("users", {'name' : request.form['username']})
 
-        if existing_user is None:
-            mongo.insert("users", {'name' : request.form['username'], 'password' : request.form['pass']})
+        if len(existing_user) == 0:
+            mongo.insert_one("users", {'name' : request.form['username'], 'password' : request.form['pass']})
             session['username'] = request.form['username']
             return redirect('/')
 
@@ -39,10 +39,10 @@ def register():
 # Route de connexion des utilisateurs
 @app.route('/login',methods=['POST'])
 def login():
-    login_user = mongo.find("users", {'name' : request.form['username']})[0]
+    login_user = mongo.find("users", {'name' : request.form['username']})
 
     if len(login_user) != 0 :
-        if (request.form['pass'].encode('utf-8') == login_user['password'].encode('utf-8')):
+        if (request.form['pass'].encode('utf-8') == login_user[0]['password'].encode('utf-8')):
             session['username'] = request.form['username']
             return redirect('/')
 
