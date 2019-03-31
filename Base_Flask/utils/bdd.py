@@ -22,8 +22,6 @@ class MongoDB():
         if last == True:
             cursor = cursor.sort([("Time", -1)]).limit(1)
             return cursor[0]
-        a = self.cursor_to_dict(cursor)
-        print(a)
         return self.cursor_to_dict(cursor)
 
     def find_all_last(self, what=dict(), _id=False, last=False):
