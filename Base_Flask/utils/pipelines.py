@@ -167,7 +167,7 @@ def compute_regression(pipeline, df, features, target, n):
 
     # Calcul interval de confiance par bootstrap
     pred = bootstrap(pipe_test, df, features, target, n)
-    inter_every_x = [np.mean(pred[i]) - 2 * np.std(pred[i]) for i in pred.keys()]
+    inter_every_x = [np.std(pred[i]) for i in pred.keys()]
     step = int(len(df)/10)
     intervalle_10 = [inter_every_x[i] for i in [step, step*2, step*3, step*4, step*5, step*6,
                                             step*7, step*8, step*9, step*10]]
