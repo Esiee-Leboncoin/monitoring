@@ -26,7 +26,7 @@ def index():
 def register():
     if request.method == 'POST':
         existing_user = mongo.find("users", {'name' : request.form['username']})
-        print(existing_user)
+        
         if len(existing_user) == 0:
             mongo.insert_one("users", {'name' : request.form['username'], 'password' : request.form['pass']})
             session['username'] = request.form['username']
