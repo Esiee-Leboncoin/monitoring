@@ -144,6 +144,7 @@ def compute_performance(pipeline, modele, df,  features, target, n, BDD=True):
     else:
         return -1
 
+
 def compute_regression(pipeline, df, features, target, n):
     '''
         Permet d'obtenir les résultats des indicateurs de performances d'une régression par crossvalidation,
@@ -160,27 +161,31 @@ def compute_regression(pipeline, df, features, target, n):
         :return:
             r2 : score R2
             variance : variance gloable expliquée par le modèle
+            rmse : root mean squared error
             intervalle_10 : une liste de 10 intervalles de confiances pris dans la list triés
                             des intervalles de confiances.
             intervalle_mean : moyenne de tous les intervalles de confiance
     '''
 
     # Calcul interval de confiance par bootstrap
-    pred = bootstrap(pipe_test, df, features, target, n)
-    inter_every_x = [np.std(pred[i]) for i in pred.keys()]
+    pred = bootstrap(pipeline, df, features, target, 200)
+    inter_every_x = [2 * np.std(pred[i]) for i in pred.keys()]
     step = int(len(df)/10)
     intervalle_10 = [inter_every_x[i] for i in [step, step*2, step*3, step*4, step*5, step*6,
                                             step*7, step*8, step*9, step*10]]
     mean_inter = np.mean(inter_every_x)
 
-    # Calcul de la variance globale expliqué et r2 par Cross-Validation
+    # Calcul de la variance globale expliqué, de r2 et du RMSE
+    # par Cross-Validation
     scoring = {"variance" : "explained_variance",
-          "r2" : "r2"}
+               "r2" : "r2",
+               "mse" : "neg_mean_squared_error"}
     result = cross_validate(pipeline, data[features], data[target], cv=7, scoring=scoring)
-    r2 = mean(result["test_r2"])
     variance = np.mean(result["test_variance"])
+    r2 = np.mean(result["test_r2"])
+    rmse = np.mean(np.sqrt(np.absolute(result["test_mse"])))
 
-    result = {"r2": r2, "variance": variance, "intervalle_10" : intervalle_10, "intervalle_mean" : mean_inter}
+    result = {"r2": r2, "variance": variance, "rmse": rmse, "intervalle_10" : intervalle_10, "intervalle_mean" : mean_inter}
 
     return result
 
