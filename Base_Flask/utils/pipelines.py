@@ -9,6 +9,9 @@ import datetime
 from sklearn.pipeline import Pipeline
 from sklearn.model_selection import cross_validate
 
+from os import listdir
+from os.path import isfile, join
+import importlib.util
 
 
 def add_metadata_property(obj, name):
@@ -16,13 +19,6 @@ def add_metadata_property(obj, name):
         Permet d'ajouter un atribut à un objet existant
     '''
     setattr(obj, "name", name)
-
-#add_metadata_property(pipe_elias, 'pipe_elias')
-
-def get_pipeline(pipe_name):
-    '''
-        Selectionne et renvoie la pipeline selectionnée
-    '''
 
 
 def load_data(path):
@@ -60,6 +56,7 @@ def load_data(path):
         print("Incorrect path")
         return -1
 
+
 def descript_df(dataframe):
     '''
         Permet de faire une description rapide du dataframe de sortie. Retourne une
@@ -93,6 +90,7 @@ def descript_df(dataframe):
 
     display = corr
     return display
+
 
 def compute_performance(pipeline, modele, df,  features, target, n, BDD=True):
     '''
@@ -189,6 +187,7 @@ def compute_regression(pipeline, df, features, target, n):
 
     return result
 
+
 def bootstrap(pipeline, data, features, target, n):
     '''
         Effectue un boostrap de la pipeline sur les données passées en paramètre.
@@ -223,3 +222,43 @@ def bootstrap(pipeline, data, features, target, n):
             pred[i].append(p[0])
 
     return pred
+
+
+def get_all_pipes_names(path):
+    '''
+        Liste  tous les fichiers contenus dans le dossier passé en paramètre.
+
+        :return: liste contenant les noms des fichiers
+    '''
+    l = [f for f in listdir(path) if isfile(join(path, f))]
+    try :
+        l.remove("default.py")
+    except:
+        pass
+    return l
+
+
+def get_pipelines(path, pipe_file):
+    '''
+        Charge la pipeline dont le nom du fichier est passé en paramètre. Et lui
+        rajoute un atribut name contenant son nom.
+
+        :params:
+            path: lien du dossier
+            pipe_file : nom du fichier de la pipeline.
+
+        :type params:
+            pipe_name: str
+
+        :return: object contenant la pipeline
+    '''
+    spec = importlib.util.spec_from_file_location("module.name", path+pipe_name)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+
+    #import de la pipeline
+    pipeline = module.pipeline
+
+    # Ajout d'un nom à la pipeline
+    add_metadata_property(pipeline, pipe_name[:-3])
+    return pipeline
