@@ -11,6 +11,25 @@ app.config.from_object(config)
 #Initialisation de la base de donnée
 mongo = bdd.MongoDB("database_pipeline")
 
+#Route de l'éditeur de texte
+@app.route('/editor', methods=['POST', 'GET'])
+def editor():
+    edit_status = "new"
+    if edit_status == "new":
+        with open("static/pipelines/default.py", 'r') as f:
+            default = f.read()
+
+        if request.method == 'POST':
+            editordata = request.form.get("editordata")
+            filename = request.form.get("filename")
+            if filename[-3:] != ".py":
+                filename += ".py"
+
+            with open("static/pipelines/{}".format(filename), 'w') as f:
+                f.write(editordata)
+
+        return render_template('editor.html', default = default)
+
 # Route principale de l'application Flask
 @app.route('/', methods=['POST', 'GET'])
 def index():
@@ -26,7 +45,7 @@ def index():
 def register():
     if request.method == 'POST':
         existing_user = mongo.find("users", {'name' : request.form['username']})
-        
+
         if len(existing_user) == 0:
             mongo.insert_one("users", {'name' : request.form['username'], 'password' : request.form['pass']})
             session['username'] = request.form['username']

@@ -1,0 +1,25 @@
+<html>
+    <head>
+        <!-- include python mode for the editor -->
+        <link rel="stylesheet"  type="text/css" href="static/codemirror/lib/codemirror.css">
+        <link rel="stylesheet" type="text/css" href="static/codemirror/theme/monokai.css">
+        <script type="text/javascript" src="static/codemirror/lib/codemirror.js"></script>
+        <script type="text/javascript" src="static/codemirror/mode/python/python.js"></script>
+    </head>
+
+    <body>
+        <form method="post">
+            <input name="filename">
+            <textarea id="editor" name="editordata">{{default}}</textarea>
+            <script>
+                var editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
+                    theme: "monokai",
+                    lineNumbers: true,
+                    autoCloseTags: true
+                })
+                editor.setSize("500", "300")
+            </script>
+            <input type="submit" value="submit"/>
+        </form>
+    </body>
+</html>
