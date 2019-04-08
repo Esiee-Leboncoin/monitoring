@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 from IPython.display import display_html
+
 def create_histo(collec_pipe_name):
 
     # REGRESSION
