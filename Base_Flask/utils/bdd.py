@@ -1,4 +1,9 @@
 from pymongo import MongoClient
+import json
+import plotly
+import plotly.plotly as py
+import plotly.graph_objs as go
+
 #'database_pipeline'
 
 class MongoDB():
@@ -53,5 +58,67 @@ class MongoDB():
         reduce = Code("function(key, stuff) { return null; }")
         result = self.db[collection].map_reduce(map, reduce, "myresults")
         return result.distinct('_id')
+
+    def get_graph_JSON(self, collec_pipe_name, score_type, color, isAnalysis):
+
+        pipe_data = self.db[collec_pipe_name].find()
+        perf_list = []
+        date_list = []
+        for data in pipe_data:
+            perf_list.append(data[score_type])
+            date_list.append(data['Time'])
+
+        if (isAnalysis):
+            graphTitle = score_type + ' over time'
+        else :
+            graphTitle = collec_pipe_name
+
+        # Create a trace
+        graph = dict(
+            data = [
+                go.Scatter(
+                    x = date_list,
+                    y = perf_list,
+                    line = dict(
+                        color = (color),
+                        width = 2
+                    )
+                ),
+            ],
+            layout = dict(
+                title=go.layout.Title(
+                    text=graphTitle,
+                    font =dict(family='Sherif',
+                        size=18,
+                        color = 'black'
+                    )
+                ),
+                xaxis = go.layout.XAxis(
+                    title=go.layout.xaxis.Title(
+                        text='Time',
+                        font=dict(
+                            family='Courier New, monospace',
+                            size=14,
+                            color='#000000'
+                        )
+                    )
+                ),
+                yaxis = go.layout.YAxis(
+                    title=go.layout.yaxis.Title(
+                        text=score_type,
+                        font=dict(
+                            family='Courier New, monospace',
+                            size=14,
+                            color='#000000'
+                        )
+                    )
+                )
+            )
+        )
+
+        graphJSON = json.dumps(graph, cls=plotly.utils.PlotlyJSONEncoder)
+
+        return graphJSON
+
 
 #docs = list(self.db[collec_pipe_name].find().sort([('Time', -1)]))

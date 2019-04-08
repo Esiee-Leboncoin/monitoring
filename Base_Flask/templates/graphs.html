@@ -1,0 +1,138 @@
+{% extends "main.html" %}
+{% block content %}
+
+<div class="row chart-rows">
+    <div class="col-sm-6 chart-block">
+        {% if graphJSON %}
+        <!-- <a href='/analysis/{{up_left_pipeline}}'>
+            <div id="link">
+                
+            </div>
+        </a> -->
+        <a href='/analysis/{{up_left_pipeline}}'>
+            <div id="graph" class="chart" >
+            
+            </div>
+        </a>
+        <form action="" method="post" name="Graph">
+            <div class="col-sm-6">
+                <p>
+                    {{form.myField()}}
+                </p>
+            </div>
+            <div class="col-sm-6">
+                <input type=submit>
+            </div>
+        </form>
+        {% else %}
+        <div href="/">
+            <div class="no_graph">
+                <img src="../static/graph_icon.png">
+                <form action="" method="post" name="Graph">
+                    <p>
+                        {{form.myField()}}
+                    </p>
+                    <input type=submit>
+                </form>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    <div class="col-sm-6 chart-block">
+        {% if graphJSON2 %}
+        <a href='/analysis/{{up_right_pipeline}}'>
+            <div id="graph2" class="chart">
+        
+            </div>
+        </a>
+        <form action="" method="post" name="Graph">
+            <div class="col-sm-6">
+                <p>
+                    {{form2.myField2()}}
+                </p>
+            </div>
+            <div class="col-sm-6">
+                <input type=submit>
+            </div>
+        </form>
+        {% else %}
+        <div href="/dashboard-2">
+            <div class="no_graph">
+                <img src="../static/graph_icon.png">
+                <form action="" method="post" name="Graph">
+                    <p>
+                        {{form2.myField2()}}
+                    </p>
+                    <input type=submit>
+                </form>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+<div class="row chart-rows">
+    <div class="col-sm-6 chart-block">
+        {% if graphJSON3 %}
+        <a href='/analysis/{{down_left_pipeline}}'>
+            <div id="graph3" class="chart">
+            
+            </div>
+        </a>
+        <form action="" method="post" name="Graph">
+            <div class="col-sm-6">
+                <p>
+                    {{form3.myField3()}}
+                </p>
+            </div>
+            <div class="col-sm-6">
+                <input type=submit>
+            </div>
+        </form>
+        {% else %}
+        <div href="/dashboard-3">
+            <div class="no_graph">
+                <img src="../static/graph_icon.png">
+                <form action="" method="post" name="Graph">
+                    <p>
+                        {{form3.myField3()}}
+                    </p>
+                    <input type=submit>
+                </form>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    <div class="col-sm-6 chart-block">
+        {% if graphJSON4 %}
+        <a href='/analysis/{{down_right_pipeline}}'>
+            <div id="graph4" class="chart">
+            
+            </div>
+        </a>
+        <form action="" method="post" name="Graph">
+            <div class="col-sm-6">
+                <p>
+                    {{form4.myField4()}}
+                </p>
+            </div>
+            <div class="col-sm-6">
+                <input type=submit>
+            </div>
+        </form>
+        {% else %}
+        <div href="/dashboard-4">
+            <div class="no_graph">
+                <img src="../static/graph_icon.png">
+                <form action="" method="post" name="Graph">
+                    <p>
+                        {{form4.myField4()}}
+                    </p>
+                    <input type=submit>
+                </form>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}
