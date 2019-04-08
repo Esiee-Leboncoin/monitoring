@@ -168,10 +168,10 @@ def compute_regression(pipeline, df, features, target, n):
     # Calcul interval de confiance par bootstrap
     pred = bootstrap(pipeline, df, features, target, 200)
     inter_every_x = [2 * np.std(pred[i]) for i in pred.keys()]
-    step = int(len(df)/10)
-    intervalle_10 = [inter_every_x[i] for i in [step, step*2, step*3, step*4, step*5, step*6,
-                                            step*7, step*8, step*9, step*10]]
-    mean_inter = np.mean(inter_every_x)
+
+    min_inter = min(inter_every_x)
+    max_inter = min(inter_every_x)
+    med_inter = np.median(inter_every_x)
 
     # Calcul de la variance globale expliqué, de r2 et du RMSE
     # par Cross-Validation
@@ -183,7 +183,7 @@ def compute_regression(pipeline, df, features, target, n):
     r2 = np.mean(result["test_r2"])
     rmse = np.mean(np.sqrt(np.absolute(result["test_mse"])))
 
-    result = {"r2": r2, "variance": variance, "rmse": rmse, "intervalle_10" : intervalle_10, "intervalle_mean" : mean_inter}
+    result = {"r2": r2, "variance": variance, "rmse": rmse, "min_inter" : min_inter, "max_inter" : max_inter, "med_inter": med_inter}
 
     return result
 
@@ -252,7 +252,7 @@ def get_pipelines(path, pipe_file):
 
         :return: object contenant la pipeline
     '''
-    spec = importlib.util.spec_from_file_location("module.name", path+pipe_name)
+    spec = importlib.util.spec_from_file_location("module.name", path+pipe_file)
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
 
@@ -260,5 +260,5 @@ def get_pipelines(path, pipe_file):
     pipeline = module.pipeline
 
     # Ajout d'un nom à la pipeline
-    add_metadata_property(pipeline, pipe_name[:-3])
+    add_metadata_property(pipeline, pipe_file[:-3])
     return pipeline
