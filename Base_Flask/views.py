@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 app = Flask(__name__)
 app.config.from_object(config)
 
-#Initialisation de la base de donnée
+#Initialisation de la base de donnee
 mongo = bdd.MongoDB("database_pipeline")
 
 #app.config['MONGO_URI'] = 'mongodb://localhost:27017/database_pipeline'
@@ -162,7 +162,7 @@ def deconnection():
     return redirect('/')
 
 
-#Route de l'éditeur de texte
+#Route de l'editeur de texte
 @app.route('/editor', methods=['POST', 'GET'])
 def editor():
     edit_status = "new"

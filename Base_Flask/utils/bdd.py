@@ -39,11 +39,11 @@ class MongoDB():
 
     def insert_one(self, collection, item):
         try:
-            #Insertion de l'item dans la base de données
+            #Insertion de l'item dans la base de donnees
             self.db[collection].insert_one(item)
             return 1
         except:
-            print("Item non importé")
+            print("Item non importe")
             return -1
 
     def cursor_to_dict(self, cursor):
