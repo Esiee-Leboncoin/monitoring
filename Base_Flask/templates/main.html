@@ -3,47 +3,42 @@
 <html>
 <body>
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
-    <nav class="">
-        <div class="container">
-            <div class="navbar-header">
+    <nav id="title-bar" class="row">
+        <div class="">
+            <div id="title-content" class="navbar-header col-sm-2">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
                     aria-expanded="false" aria-controls="navbar">
                     <span class="sr-only">Toggle navigation</span>
                 </button>
-                <a class="navbar-brand" href="#">Flask-LeBonCoin</a>
+                <a class="navbar-brand" href="#">LeBonCoin - Pipelines</a>
             </div>
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/register">S'inscrire</a></li>
-                    <li><a href="/deco">Déconnexion</a></li>
+                    <li><a class="top-link-style" href="/">Home</a></li>
+                    <li><a class="top-link-style" href="/register">S'inscrire</a></li>
+                    <li><a class="top-link-style" href="/deco">Déconnexion</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
-
-    <div id="title">
-        <h2>Bienvenue {{ username }}</h2>
-    </div>
-
     <div id="main" class="row">
-        <div class="col-sm-2 main-content">
+        <div class="col-sm-2 sidebar-content">
             <ul class="nav">
-                <li class="nav-item">
+                <li class="nav-item side-item">
                     <a class="nav-link" href="/">Home</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item side-item">
                     {% if pipeline %}
                     <a class="nav-link" href="/analysis/{{pipeline}}">Analysis</a>
                     {% else %}
                     <a class="nav-link" href="/analysis/select_a_pipeline">Analysis</a>
                     {% endif %}
                 </li>
-                <li class="nav-item">
+                <li class="nav-item side-item">
                     <a class="nav-link" href="/history">History</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item side-item">
                     <a class="nav-link" href="/add_pipeline">Add</a>
                 </li>
             </ul>

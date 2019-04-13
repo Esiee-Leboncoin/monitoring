@@ -2,19 +2,82 @@ html,body {
     height:100%;
     width:1400px;
     margin:auto;
+    overflow: hidden;
+}
+
+.btn {
+    background-color:darkslategray;
+}
+
+.btn:hover {
+    background-color:#222d22;
 }
 
 #title {
-    text-align:center;;
+    text-align:center;
+}
+
+#title-bar {
+    width:100%;
+    background-color: darkslategray;
+}
+
+#title-content {
+    height:100%;
+    padding:0;
+    border-right:1px solid black;
+}
+
+.top-link-style {
+    color:white;
+}
+
+#navbar {
+    float:right;
+    padding-right:0;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    color: white;
+}
+
+.navbar-brand:hover {
+    color:white;
 }
 
 #main {
     width:100%;
-    height:100%;
+    height:95%;
 }
 
 .main-content {
     height:100%;
+    padding:0;
+}
+
+.sidebar-content {
+    height:100%;
+    padding:0;
+    background-color: darkslategray;
+    border: 1px solid black;
+}
+
+.side-item {
+    border-bottom:1px black solid;
+}
+
+.side-item > a {
+    color:white;
+}
+
+.nav > li >a:hover {
+    color:white;
+    background-color: #222d22;
+}
+
+.row {
+    margin:0;
 }
 
 .chart {
@@ -33,7 +96,6 @@ html,body {
     height:100%;
     width:50%;
     border:1px solid gray;
-    border-radius:20px;
 }
 
 .no_graph {
