@@ -5,6 +5,22 @@ html,body {
     overflow: hidden;
 }
 
+#active_home {
+    background-color:#222d22;
+}
+
+#active_analysis {
+    background-color:#222d22;
+}
+
+#active_history {
+    background-color:#222d22;
+}
+
+#active_add {
+    background-color:#222d22;
+}
+
 .btn {
     background-color:darkslategray;
 }
@@ -71,7 +87,7 @@ html,body {
     color:white;
 }
 
-.nav > li >a:hover {
+.nav > li >a:hover, .nav > li >a:focus {
     color:white;
     background-color: #222d22;
 }

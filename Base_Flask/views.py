@@ -71,7 +71,7 @@ def index():
             users.update({'name' : session['username']}, {'$set': { "down-right-graph": graphJSON4, "down-right-collection": form4.myField4.data  } })
             down_right_collection = form4.myField4.data
 
-        return render_template('graphs.html', up_left_pipeline = up_left_collection, up_right_pipeline = up_right_collection, down_left_pipeline = down_left_collection, down_right_pipeline = down_right_collection, form=form, form2=form2, form3=form3, form4=form4, username = session['username'], graphJSON=graphJSON, graphJSON2=graphJSON2, graphJSON3=graphJSON3, graphJSON4=graphJSON4, graphJSON_RMSE=0, graphJSON_R2=0, graphJSON_Variance=0)
+        return render_template('graphs.html', up_left_pipeline = up_left_collection, up_right_pipeline = up_right_collection, down_left_pipeline = down_left_collection, down_right_pipeline = down_right_collection, form=form, form2=form2, form3=form3, form4=form4, username = session['username'], graphJSON=graphJSON, graphJSON2=graphJSON2, graphJSON3=graphJSON3, graphJSON4=graphJSON4, graphJSON_RMSE=0, graphJSON_R2=0, graphJSON_Variance=0, active_item="active_home")
 
     return render_template('index.html')
 
@@ -91,9 +91,9 @@ def analysis(pipeline):
             graphJSON_RMSE = mongo.get_graph_JSON(pipeline, 'RMSE', 'rgb(139, 205, 249)', True)
             graphJSON_R2 = mongo.get_graph_JSON(pipeline, 'R2', 'rgb(147, 9, 4)', True)
             graphJSON_Variance = mongo.get_graph_JSON(pipeline, 'Variance', 'rgb(0, 117, 74)', True)
-            return render_template('analysis.html', username = session['username'], pipeline=pipeline, pipeline_score=round(pipeline_score,1), graphJSON_RMSE=graphJSON_RMSE, graphJSON_R2=graphJSON_R2, graphJSON_Variance=graphJSON_Variance, graphJSON=0, graphJSON2=0, graphJSON3=0, graphJSON4=0)
+            return render_template('analysis.html', username = session['username'], pipeline=pipeline, pipeline_score=round(pipeline_score,1), graphJSON_RMSE=graphJSON_RMSE, graphJSON_R2=graphJSON_R2, graphJSON_Variance=graphJSON_Variance, graphJSON=0, graphJSON2=0, graphJSON3=0, graphJSON4=0, active_item="active_analysis")
 
-        return render_template('analysis.html', username = session['username'], pipeline=pipeline, pipelineForm=pipelineForm)
+        return render_template('analysis.html', username = session['username'], pipeline=pipeline, pipelineForm=pipelineForm, active_item="active_analysis")
 
     return render_template('index.html')
 
@@ -102,7 +102,7 @@ def analysis(pipeline):
 def history():
     if 'username' in session:
 
-        return render_template('history.html', username = session['username'])
+        return render_template('history.html', username = session['username'], active_item="active_history")
 
     return render_template('index.html')
 
@@ -111,7 +111,7 @@ def history():
 def add_pipeline():
     if 'username' in session:
 
-        return render_template('add_pipeline.html', username = session['username'])
+        return render_template('add_pipeline.html', username = session['username'], active_item="active_add")
 
     return render_template('index.html')
 
