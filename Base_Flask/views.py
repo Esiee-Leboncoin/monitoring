@@ -167,8 +167,16 @@ def deconnection():
 def editor():
     edit_status = "new"
     if edit_status == "new":
+        form = forms.FirstGraphSelection(request.form)
+
         with open("static/pipelines/default.py", 'r') as f:
             default = f.read()
+
+        if form.validate():
+            pipe_file = form.myField.data
+            with open("static/pipelines/{}".format(pipe_file), 'r') as f:
+                pipelines = f.read()
+            return render_template('editor.html', default = pipelines)
 
         if request.method == 'POST':
             editordata = request.form.get("editordata")
@@ -179,19 +187,4 @@ def editor():
             with open("static/pipelines/{}".format(filename), 'w') as f:
                 f.write(editordata)
 
-        return render_template('editor.html', default = default)
-
-    if edit_status == "edit":
-        with open("static/pipelines/default.py", 'r') as f:
-            default = f.read()
-
-        if request.method == 'POST':
-            editordata = request.form.get("editordata")
-            filename = request.form.get("filename")
-            if filename[-3:] != ".py":
-                filename += ".py"
-
-            with open("static/pipelines/{}".format(filename), 'w') as f:
-                f.write(editordata)
-
-        return render_template('editor.html', default = default)
+        return render_template('editor.html', default = default, form)
