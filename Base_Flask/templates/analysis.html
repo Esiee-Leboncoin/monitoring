@@ -5,9 +5,19 @@
 <div class="col-sm-6 main-content main-analysis">
     <div class="analysis-block">
         <span id="pipeline-title">{{ pipeline }}</span>
-        <div id="pipeline-field">
+        {% if pipeline_score >= 80 %}
+        <div id="green-field" class="pipeline-field">
             <span id="pipeline-score">{{ pipeline_score }}%</span>
         </div>
+        {% elif pipeline_score < 80 and pipeline_score >= 70 %}
+        <div id="orange-field" class="pipeline-field">
+            <span id="pipeline-score">{{ pipeline_score }}%</span>
+        </div>
+        {% else %}
+        <div id="red-field" class="pipeline-field">
+            <span id="pipeline-score">{{ pipeline_score }}%</span>
+        </div>
+        {% endif %}
         <span id="pipeline-score-description">Score actuel</span>
     </div>
     <div id="graph_RMSE" class="analysis-block">

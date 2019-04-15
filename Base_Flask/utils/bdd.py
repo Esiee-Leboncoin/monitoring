@@ -81,7 +81,8 @@ class MongoDB():
                     y = perf_list,
                     line = dict(
                         color = (color),
-                        width = 2
+                        width = 2,
+                        dash='dot'
                     )
                 ),
             ],

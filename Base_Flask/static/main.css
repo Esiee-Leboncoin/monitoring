@@ -58,9 +58,10 @@ html,body {
     color: white;
 }
 
-.navbar-brand:hover {
+.navbar-brand:hover, .navbar-brand:focus {
     color:white;
 }
+
 
 #main {
     width:100%;
@@ -147,7 +148,7 @@ html,body {
     color:gray;
 }
 
-#pipeline-field {
+.pipeline-field {
     height:60%;
     width:60%;
     margin:auto;
@@ -156,8 +157,19 @@ html,body {
     justify-content: center;
     border-radius:50%;
     border: 2px solid black;
-    background-color: green;
     color:white;
+}
+
+#green-field {
+    background-color: green;
+}
+
+#orange-field {
+    background-color: orange;
+}
+
+#red-field {
+    background-color: red;
 }
 
 #pipeline-score {
@@ -170,6 +182,81 @@ html,body {
     line-height:60px;
     width:100%;
     color:gray;
+}
+
+input {
+    height:30px;
+    background-color: darkslategray;
+    color:white;
+    border-radius:50px;
+    border:2px solid black;
+    padding-left: 10%;
+    padding-right: 10%;
+    margin-left: 20%;
+}
+
+.formfield-select--container {
+    position: relative; 
+    width:50%;
+    float:right;
+    margin-right:15%;
+	
+	background-color: darkslategray;
+    border: #777 1px solid;
+    border-radius:50px;
+	
+	overflow: hidden; 
+	/* 
+		Le select natif pourra 
+		dépasser sans être vu 
+	*/
+}
+
+.formfield-select--container select {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+    appearance: none;
+    
+    background-color:darkslategray;
+    color:white;
+
+    height:30px !important;
+	width: 100%; 
+	/* 
+		On est sûr de ne plus voir
+		la flèche native 
+	*/
+	
+	height: auto;
+	border: 0; 
+	margin: 0;
+	padding-left: 10%;
+	border-radius: 0;
+	
+
+	overflow: hidden;
+	text-overflow: ellipsis;
+	/* 
+		On empêche le texte d'aller
+		jusqu'au bout s'il est trop long
+	*/
+
+}
+
+.formfield-select--container::after { 
+	/* Le pointeur du select */
+	content: '';
+	position: absolute;
+	top: 50%; 
+	margin-top: -3px;
+	right: .75em;  
+	display: block; 
+	width: 0; height: 0;
+	border-color: transparent;
+	border-top-color: white; 
+	border-width: 6px;
+	border-style: solid;
+	pointer-events: none;
 }
 
 /* .modebar {
