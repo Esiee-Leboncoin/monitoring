@@ -1,6 +1,5 @@
-from wtforms import Form, StringField, SelectField
-from utils import bdd
-
+from wtforms import Form, StringField, SelectField, SubmitField
+from utils import bdd, pipelines
 mongo = bdd.MongoDB("database_pipeline")
 
 class FirstGraphSelection(Form):
@@ -37,3 +36,13 @@ class PipelineToAnalyse(Form):
         all_collections.remove("users")
     myChoices = [(g, g) for g in all_collections]
     pipelineToAnalyse = SelectField(u'Field name', choices = myChoices)
+
+class PipelineSelectEditor(Form):
+    display = SubmitField(label='Afficher')
+    delete = SubmitField(label='Supprimer')
+    all_pipes = pipelines.get_all_pipes_names("static/pipelines")
+    all_pipes = [(g, g) for g in pipelines.get_all_pipes_names("static/pipelines")]
+    pipToEdit = SelectField(choices = all_pipes)
+
+def UpdateEditor(form):
+    form.pipToEdit.choices = [(g, g) for g in pipelines.get_all_pipes_names("static/pipelines")]

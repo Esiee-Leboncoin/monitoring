@@ -1,13 +1,14 @@
 # Imports
 import pymongo
-from flask import Flask, render_template, url_for, request, session, redirect
+from flask import Flask, render_template, url_for, request, session, redirect, flash
 
 import config
-from utils import bdd, graph, forms
+from utils import bdd, graph, forms, pipelines
 
 import numpy as np
 
 import matplotlib.pyplot as plt
+import os
 
 # Initialisation et chargment du fichier Config
 app = Flask(__name__)
@@ -106,16 +107,6 @@ def history():
 
     return render_template('index.html')
 
-# Route afin d'ajouter une nouvelle pipeline
-@app.route('/add_pipeline', methods=['POST', 'GET'])
-def add_pipeline():
-    if 'username' in session:
-
-        return render_template('add_pipeline.html', username = session['username'], active_item="active_add")
-
-    return render_template('index.html')
-
-
 # Route d'inscription des utilisateurs
 @app.route('/register', methods=['POST', 'GET'])
 def register():
@@ -162,35 +153,45 @@ def deconnection():
     return redirect('/')
 
 
-#Route de l'editeur de texte
-'''
-@app.route('/editor', methods=['POST', 'GET'])
-def editor():
-    edit_status = "new"
-    if edit_status == "new":
-        form = forms.FirstGraphSelection(request.form)
+#Route de l'édition des pipelines
+@app.route('/add_pipeline', methods=['POST', 'GET'])
+def add_pipeline():
+    if 'username' in session:
+        formeditor = forms.PipelineSelectEditor(request.form)
 
         with open("static/pipelines/default.py", 'r') as f:
             default = f.read()
 
-        if form.validate():
-            pipe_file = form.myField.data
-            with open("static/pipelines/{}".format(pipe_file), 'r') as f:
-                pipelines = f.read()
-            return render_template('editor.html', default = pipelines)
+        if formeditor.validate():
+            pipe_name = formeditor.pipToEdit.data
+
+            if formeditor.display.data == True:
+                with open("static/pipelines/{}".format(pipe_name+".py"), 'r') as f:
+                    pipeline = f.read()
+                return render_template('add_pipeline.html', pipe_name = pipe_name, default = pipeline, formeditor = formeditor,
+                                        username = session['username'], active_item="active_add")
+
+            if formeditor.delete.data == True:
+                os.remove("static/pipelines/{}".format(pipe_name+".py"))
+                forms.UpdateEditor(formeditor)
+                flash("Pipeline supprimé")
+
+            return render_template('add_pipeline.html', pipe_name = "default", default = default, formeditor = formeditor,
+                                    username = session['username'], active_item="active_add")
+
 
         if request.method == 'POST':
             editordata = request.form.get("editordata")
-            filename = request.form.get("filename")
-            if filename[-3:] != ".py":
-                filename += ".py"
+            pipe = request.form.get("pipe_name")
 
-            with open("static/pipelines/{}".format(filename), 'w') as f:
+            if pipe[-3:] != ".py":
+                pipe = pipe + ".py"
+
+            with open("static/pipelines/{}".format(pipe), 'w+') as f:
                 f.write(editordata)
+                forms.UpdateEditor(formeditor)
+                flash("Pipeline importée")
 
-<<<<<<< HEAD
-        return render_template('editor.html', default = default, form)
-'''
-=======
-        return render_template('editor.html', default = default)
->>>>>>> a4ffa3260d9e90d4de4dfdd996cfcdc061505e74
+        return render_template('add_pipeline.html', pipe_name = "default", default = default, formeditor = formeditor)
+
+    return render_template('index.html')
