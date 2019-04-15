@@ -131,14 +131,6 @@ def compute_performance(pipeline, modele, df,  features, target, n, BDD=True):
         mongo = MongoDB("database_pipeline")
         mongo.insert_one(pipeline.name, result)
 
-    return result
-
-    elif(modele == "classification"):
-        print("Choix du type d'estimateur : Classification \n")
-        perfs = compute_classification(pipeline, df)
-        return perfs
-        # poster les scores dans la database
-
     else:
         return -1
 
@@ -228,19 +220,19 @@ def get_all_pipes_names(path):
     '''
         Liste  tous les fichiers contenus dans le dossier passé en paramètre.
 
-        :return: liste contenant les noms des fichiers
+        :return: liste contenant les noms des fichiers sans l'extension
     '''
-    l = [f for f in listdir(path) if isfile(join(path, f))]
+    l = [f[:-3] for f in listdir(path) if isfile(join(path, f))]
     try :
-        l.remove("default.py")
+        l.remove("default")
     except:
         pass
     return l
 
 
-def get_pipelines(path, pipe_file):
+def get_pipelines(path, pipe_name):
     '''
-        Charge la pipeline dont le nom du fichier est passé en paramètre. Et lui
+        Charge la pipeline dont le nom est passé en paramètre. Et lui
         rajoute un atribut name contenant son nom.
 
         :params:
@@ -252,7 +244,7 @@ def get_pipelines(path, pipe_file):
 
         :return: object contenant la pipeline
     '''
-    spec = importlib.util.spec_from_file_location("module.name", path+pipe_file)
+    spec = importlib.util.spec_from_file_location("module.name", path+pipe_name+".py")
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
 
@@ -260,5 +252,5 @@ def get_pipelines(path, pipe_file):
     pipeline = module.pipeline
 
     # Ajout d'un nom à la pipeline
-    add_metadata_property(pipeline, pipe_file[:-3])
+    add_metadata_property(pipeline, pipe_name)
     return pipeline

@@ -163,6 +163,7 @@ def deconnection():
 
 
 #Route de l'editeur de texte
+'''
 @app.route('/editor', methods=['POST', 'GET'])
 def editor():
     edit_status = "new"
