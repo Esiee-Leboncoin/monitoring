@@ -188,5 +188,9 @@ def editor():
             with open("static/pipelines/{}".format(filename), 'w') as f:
                 f.write(editordata)
 
+<<<<<<< HEAD
         return render_template('editor.html', default = default, form)
 '''
+=======
+        return render_template('editor.html', default = default)
+>>>>>>> a4ffa3260d9e90d4de4dfdd996cfcdc061505e74
