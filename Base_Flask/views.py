@@ -18,8 +18,9 @@ app.config.from_object(config)
 #Initialisation de la base de donnee
 mongo = bdd.MongoDB("database_pipeline")
 
-#app.config['MONGO_URI'] = 'mongodb://localhost:27017/database_pipeline'
+pipelines.autoperform()
 
+#app.config['MONGO_URI'] = 'mongodb://localhost:27017/database_pipeline'
 
 # Route principale de l'application Flask
 @app.route('/', methods=['POST', 'GET'])
