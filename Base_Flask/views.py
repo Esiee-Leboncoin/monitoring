@@ -195,15 +195,32 @@ def add_pipeline():
             editordata = request.form.get("editordata")
             pipe = request.form.get("pipe_name")
 
+            if request.form.get('Test'):
+                if 'file' not in request.files:
+                    flash('Pas de fichier')
+                else:
+                    file = request.files['file']
+
+                    if file.filename == '':
+                        flash('Fichier sans extension')
+
+                    if file and allowed_file(file.filename):
+                        filename = secure_filename(file.filename)
+                        file.save("static/data/{}".format(filename))
+                        flash('Fichier importé')
+                    else:
+                        flash('Fichier non pris en charge') 
+
             if pipe[-3:] != ".py":
                 pipe = pipe + ".py"
 
             with open("static/pipelines/{}".format(pipe), 'w+') as f:
                 f.write(editordata)
                 forms.UpdateEditor(formeditor)
-                flash("Pipeline importée")
+                flash("Pipeline importée")    
+                
 
-        return render_template('add_pipeline.html', pipe_name = "default", default = default, formeditor = formeditor)
+        return render_template('add_pipeline.html', pipe_name = "default", default = default, formeditor = formeditor, active_item="active_add")
 
     return render_template('index.html')
 
@@ -224,7 +241,8 @@ def add_data():
 
                 if file and allowed_file(file.filename):
                     filename = secure_filename(file.filename)
-                    file.save("/static/data/{}".format(filename))
+                    file.save("static/data/{}".format(filename))
+                    flash('Fichier importé')
                 else:
                     flash('Fichier non pris en charge')
 
