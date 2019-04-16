@@ -29,7 +29,7 @@
             {{ formeditor.delete }}
         </form>
 
-        <form method="post">
+        <form method="post" enctype=multipart/form-data>
             <label for="name">Nom de la pipeline :</label>
             <input type="text" name="pipe_name" value={{pipe_name}}>
             <textarea id="editor" name="editordata">{{ default }}</textarea>
@@ -41,7 +41,10 @@
                 })
                 editor.setSize("500", "300")
             </script>
-            <input type="submit" value="Enregistrer"/>
+            <input type="submit" name="Enregistrer" value="Enregistrer"/>
+            <h1>Ajouter de nouvelles données</h1>
+            <input type=file name=file>
+            <input type="submit" name="Test" value="Test"/>
         </form>
     </body>
 </html>

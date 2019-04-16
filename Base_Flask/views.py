@@ -44,6 +44,8 @@ def index():
         down_left_collection = users.find_one({'name' : session['username']})["down-left-collection"]
         down_right_collection = users.find_one({'name' : session['username']})["down-right-collection"]
 
+        forms.UpdateGraph(form)
+
         if up_left_collection:
             graphJSON = mongo.get_graph_type(up_left_collection,'rgb(139, 205, 249)')
             users.update({'name' : session['username']}, {'$set': { "up-left-graph": graphJSON } })
@@ -196,40 +198,50 @@ def add_pipeline():
             editordata = request.form.get("editordata")
             pipe = request.form.get("pipe_name")
 
-            if pipe[-3:] != ".py":
-                pipe = pipe + ".py"
 
-            with open("static/pipelines/{}".format(pipe), 'w+') as f:
-                f.write(editordata)
-                forms.UpdateEditor(formeditor)
-                flash("Pipeline importée")
+            if request.form.get('Test'):
 
-        return render_template('add_pipeline.html', pipe_name = "default", default = default, formeditor = formeditor)
+                if pipe[-3:] != ".py":
+                    pipe = pipe + ".py"
 
-    return render_template('index.html')
+                with open("static/pipelines/{}".format(pipe), 'w+') as f:
+                    f.write(editordata)
+                    forms.UpdateEditor(formeditor)
+                    flash("Pipeline importée")
+                
+                if pipe[-3:] == ".py":
+                    pipe = pipe[:-3]
 
-#Route
-@app.route('/add_data', methods=['POST', 'GET'])
-def add_data():
-    if 'username' in session:
-        if request.method == 'POST':
-            # check if the post request has the file part
-            if 'file' not in request.files:
-                flash('Pas de fichier')
+                if 'file' not in request.files:
+                    flash('Pas de fichier')
+                else:
+                    file = request.files['file']
+
+                    if file.filename == '':
+                        flash('Fichier sans extension')
+
+                    if file and allowed_file(file.filename):
+                        filename = secure_filename(file.filename)
+                        file.save("static/data/{}".format(filename))
+                        flash('Fichier importé')
+                        
+                        pipeline, modele, features, target = pipelines.get_pipelines("static/pipelines/", pipe)
+                        data = pipelines.load_data("static/data/{}".format(filename))
+                        pipelines.compute_performance(pipeline, modele, df=data, features=features ,target=target)
+                    else:
+                        flash('Fichier non pris en charge') 
 
             else:
-                file = request.files['file']
+                if pipe[-3:] != ".py":
+                    pipe = pipe + ".py"
 
-                if file.filename == '':
-                    flash('Fichier sans extension')
+                with open("static/pipelines/{}".format(pipe), 'w+') as f:
+                    f.write(editordata)
+                    forms.UpdateEditor(formeditor)
+                    flash("Pipeline importée")    
+                
 
-                if file and allowed_file(file.filename):
-                    filename = secure_filename(file.filename)
-                    file.save("static/data/{}".format(filename))
-                else:
-                    flash('Fichier non pris en charge')
-
-        return render_template('add_data.html')
+        return render_template('add_pipeline.html', pipe_name = "default", default = default, formeditor = formeditor, active_item="active_add")
 
     return render_template('index.html')
 

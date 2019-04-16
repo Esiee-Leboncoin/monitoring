@@ -34,6 +34,8 @@ class autoperform():
             data = load_data("static/data/{}".format(data))
             compute_performance(pipeline, modele, df=data, features=features ,target=target)
 
+from . import bdd
+
 
 def add_metadata_property(obj, name):
     '''
@@ -316,12 +318,7 @@ def get_pipelines(path, pipe_name):
     modele = module.modele
     features = module.features
     target = module.target
-    data = module.data
 
     # Ajout d'un nom à la pipeline
     add_metadata_property(pipeline, pipe_name)
-    return pipeline, modele, features, target, data
-
-#pipeline, modele, features, target, data = get_pipelines("../statict/pipelines", "pipe_test_1")
-#data = load_data("../static/data/{}".format("headbrain.csv"))
-#compute_performance(pipeline, modele, df=data, features=features ,target=target)
+    return pipeline, modele, features, target
