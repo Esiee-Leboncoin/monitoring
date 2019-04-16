@@ -1,6 +1,5 @@
 from utils import bdd, graph
 
-
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -15,6 +14,25 @@ from sklearn.metrics import precision_recall_fscore_support
 from os import listdir
 from os.path import isfile, join
 import importlib.util
+import schedule
+import time
+
+from . import bdd
+
+class autoperform():
+    def __init__(self):
+        schedule.every(5).seconds.do(self.job)
+        while True:
+            schedule.run_pending()
+            time.sleep(1)
+
+    def job(self):
+        all_pipes = get_all_pipes_names("static/pipelines")
+        all_pipes = ["pipe_test_1"]
+        for pipe in all_pipes:
+            pipeline, modele, features, target, data = get_pipelines("static/pipelines/", pipe)
+            data = load_data("static/data/{}".format(data))
+            compute_performance(pipeline, modele, df=data, features=features ,target=target)
 
 
 def add_metadata_property(obj, name):
@@ -130,7 +148,7 @@ def compute_performance(pipeline, modele, df,  features, target, BDD=True):
         result['Time'] = datetime.datetime.now()
         result["_id"] = pipeline.name + "." + str(result['Time'])
         result["Type"] = modele
-        mongo = MongoDB("database_pipeline")
+        mongo = bdd.MongoDB("database_pipeline")
         mongo.insert_one(pipeline.name, result)
 
     return result
