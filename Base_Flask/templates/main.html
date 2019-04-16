@@ -62,11 +62,20 @@
                 {% endif %}
                 {% if active_item == 'active_add' %}
                 <li id="{{ active_item }}" class="nav-item side-item">
-                    <a class="nav-link" href="/add_pipeline">Add</a>
+                    <a class="nav-link" href="/add_pipeline">Add Pipeline</a>
                 </li>
                 {% else %}
                 <li id="" class="nav-item side-item">
-                    <a class="nav-link" href="/add_pipeline">Add</a>
+                    <a class="nav-link" href="/add_pipeline">Add Pipeline</a>
+                </li>
+                {% endif %}
+                {% if active_item == 'active_add' %}
+                <li id="{{ active_item }}" class="nav-item side-item">
+                    <a class="nav-link" href="/add_data">Add Data</a>
+                </li>
+                {% else %}
+                <li id="" class="nav-item side-item">
+                    <a class="nav-link" href="/add_data">Add Data</a>
                 </li>
                 {% endif %}
             </ul>
@@ -77,7 +86,7 @@
         </div>
 
     </div>
-    
+
 </body>
 
 <!-- D3.js -->
@@ -88,7 +97,7 @@
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
 <script type="text/javascript">
-    
+
     if (document.getElementById("graph") != null) {
         var graphs = {{graphJSON | safe}};
         Plotly.plot('graph',graphs,{});

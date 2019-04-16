@@ -229,32 +229,30 @@ def add_pipeline():
 
         return render_template('add_pipeline.html', pipe_name = "default", default = default, formeditor = formeditor)
 
-
-
     return render_template('index.html')
-
-    #c9d3c5f9e9d5c6b5b055750f0dec19f64c794e73
 
 #Route de l'édition des pipelines
 @app.route('/add_data', methods=['POST', 'GET'])
 def add_data():
-    if request.method == 'POST':
-        # check if the post request has the file part
-        if 'file' not in request.files:
-            flash('Pas de fichier')
+    if 'username' in session:
+        if request.method == 'POST':
+            # check if the post request has the file part
+            if 'file' not in request.files:
+                flash('Pas de fichier')
 
-        else:
-            file = request.files['file']
+            else:
+                file = request.files['file']
 
-            if file.filename == '':
-                flash('Fichier sans extension')
+                if file.filename == '':
+                    flash('Fichier sans extension')
 
-            if file and allowed_file(file.filename):
-                filename = secure_filename(file.filename)
-                file.save("static/pipelines/{}".format(filename))
+                if file and allowed_file(file.filename):
+                    filename = secure_filename(file.filename)
+                    file.save("static/pipelines/{}".format(filename))
 
-    return render_template('add_data.html')
-
+        return render_template('add_data.html')
+        
+    return render_template('index.html')
 
 def allowed_file(filename):
     return '.' in filename and \
