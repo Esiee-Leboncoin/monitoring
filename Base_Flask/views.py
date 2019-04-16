@@ -231,7 +231,7 @@ def add_pipeline():
 
     return render_template('index.html')
 
-#Route de l'édition des pipelines
+#Route
 @app.route('/add_data', methods=['POST', 'GET'])
 def add_data():
     if 'username' in session:
@@ -248,10 +248,12 @@ def add_data():
 
                 if file and allowed_file(file.filename):
                     filename = secure_filename(file.filename)
-                    file.save("static/pipelines/{}".format(filename))
+                    file.save("static/data/{}".format(filename))
+                else:
+                    flash('Fichier non pris en charge')
 
         return render_template('add_data.html')
-        
+
     return render_template('index.html')
 
 def allowed_file(filename):

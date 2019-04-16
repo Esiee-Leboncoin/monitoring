@@ -3,7 +3,21 @@
 
 <!doctype html>
 <html>
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='add_pipeline.css') }}">
+
    <body>
+       {% block contentform %}
+       <div class="container">
+           {% for message in get_flashed_messages() %}
+           <div class="flash">
+               {{ message }}
+           </div>
+           {% endfor %}
+           {% block page_content %}{% endblock %}
+       </div>
+       {% endblock %}
+
        <h1>Ajouter de nouvelles données</h1>
        <form method=post enctype=multipart/form-data>
            <input type=file name=file>
