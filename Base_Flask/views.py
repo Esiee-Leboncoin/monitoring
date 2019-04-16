@@ -44,60 +44,36 @@ def index():
         down_right_collection = users.find_one({'name' : session['username']})["down-right-collection"]
 
         if up_left_collection:
-            if mongo.db[up_left_collection].find_one({'Type' : 'regression'}):
-                graphJSON = mongo.get_graph_JSON(up_left_collection, 'RMSE', 'rgb(139, 205, 249)', False)
-            else:
-                graphJSON = mongo.get_graph_JSON(up_left_collection, 'Accuracy', 'rgb(139, 205, 249)', False)
+            graphJSON = mongo.get_graph_type(up_left_collection,'rgb(139, 205, 249)')
             users.update({'name' : session['username']}, {'$set': { "up-left-graph": graphJSON } })
         if up_right_collection:
-            if mongo.db[up_right_collection].find_one({'Type' : 'regression'}):
-                graphJSON2 = mongo.get_graph_JSON(up_right_collection, 'RMSE', 'rgb(147, 9, 4)', False)
-            else:
-                graphJSON2 = mongo.get_graph_JSON(up_right_collection, 'Accuracy', 'rgb(147, 9, 4)', False)
+            graphJSON2 = mongo.get_graph_type(up_right_collection,'rgb(147, 9, 4)')
             users.update({'name' : session['username']}, {'$set': { "up-right-graph": graphJSON2 } })
         if down_left_collection:
-            if mongo.db[down_left_collection].find_one({'Type' : 'regression'}):
-                graphJSON3 = mongo.get_graph_JSON(down_left_collection, 'RMSE', 'rgb(0, 117, 74)', False)
-            else:
-                graphJSON3 = mongo.get_graph_JSON(down_left_collection, 'Accuracy', 'rgb(0, 117, 74)', False)
+            graphJSON3 = mongo.get_graph_type(down_left_collection,'rgb(0, 117, 74)')
             users.update({'name' : session['username']}, {'$set': { "down-left-graph": graphJSON3 } })
         if down_right_collection:
-            if mongo.db[down_right_collection].find_one({'Type' : 'regression'}):
-                graphJSON4 = mongo.get_graph_JSON(down_right_collection, 'RMSE', 'rgb(160, 90, 4)', False)
-            else:
-                graphJSON4 = mongo.get_graph_JSON(down_right_collection, 'Accuracy', 'rgb(160, 90, 4)', False)
+            graphJSON4 = mongo.get_graph_type(down_right_collection,'rgb(160, 90, 4)')
             users.update({'name' : session['username']}, {'$set': { "down-right-graph": graphJSON4 } })
 
         if form.validate():
             selected_collection = form.myField.data
-            if mongo.db[selected_collection].find_one({'Type' : 'regression'}):
-                graphJSON = mongo.get_graph_JSON(selected_collection, 'RMSE', 'rgb(139, 205, 249)', False)
-            else:
-                graphJSON = mongo.get_graph_JSON(selected_collection, 'Accuracy', 'rgb(139, 205, 249)', False)
+            graphJSON = mongo.get_graph_type(selected_collection,'rgb(139, 205, 249)')
             users.update({'name' : session['username']}, {'$set': { "up-left-graph": graphJSON, "up-left-collection": selected_collection } })
             up_left_collection = selected_collection
         if form2.validate():
             selected_collection = form2.myField2.data
-            if mongo.db[selected_collection].find_one({'Type' : 'regression'}):
-                graphJSON2 = mongo.get_graph_JSON(selected_collection, 'RMSE', 'rgb(147, 9, 4)', False)
-            else:
-                graphJSON2 = mongo.get_graph_JSON(selected_collection, 'Accuracy', 'rgb(147, 9, 4)', False)
+            graphJSON2 = mongo.get_graph_type(selected_collection,'rgb(147, 9, 4)')
             users.update({'name' : session['username']}, {'$set': { "up-right-graph": graphJSON2, "up-right-collection": selected_collection  } })
             up_right_collection = selected_collection
         if form3.validate():
             selected_collection = form3.myField3.data
-            if mongo.db[selected_collection].find_one({'Type' : 'regression'}):
-                graphJSON3 = mongo.get_graph_JSON(selected_collection, 'RMSE', 'rgb(0, 117, 74)', False)
-            else:
-                graphJSON3 = mongo.get_graph_JSON(selected_collection, 'Accuracy', 'rgb(0, 117, 74)', False)
+            graphJSON3 = mongo.get_graph_type(selected_collection,'rgb(0, 117, 74)')
             users.update({'name' : session['username']}, {'$set': { "down-left-graph": graphJSON3, "down-left-collection": selected_collection  } })
             down_left_collection = selected_collection
         if form4.validate():
             selected_collection = form4.myField4.data
-            if mongo.db[selected_collection].find_one({'Type' : 'regression'}):
-                graphJSON4 = mongo.get_graph_JSON(selected_collection, 'RMSE', 'rgb(160, 90, 4)', False)
-            else:
-                graphJSON4 = mongo.get_graph_JSON(selected_collection, 'Accuracy', 'rgb(160, 90, 4)', False)
+            graphJSON4 = mongo.get_graph_type(selected_collection,'rgb(160, 90, 4)')
             users.update({'name' : session['username']}, {'$set': { "down-right-graph": graphJSON4, "down-right-collection": selected_collection  } })
             down_right_collection = selected_collection
 
