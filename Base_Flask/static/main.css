@@ -193,7 +193,10 @@ html,body {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> f7efccab43f779cba0ad85877ac865815704fb4d
 
 /* Message flashing */
 .flash {
@@ -202,7 +205,10 @@ html,body {
   width: 100%;
 }
 
+<<<<<<< HEAD
 >>>>>>> 05ea5fef9992461cd607d2b9b9c26a9425c336c9
+=======
+>>>>>>> f7efccab43f779cba0ad85877ac865815704fb4d
 input {
     height:30px;
     background-color: darkslategray;
@@ -211,6 +217,13 @@ input {
     border:1px solid black;
 }
 
+<<<<<<< HEAD
+=======
+input:hover {
+    background-color: #222d22;
+}
+
+>>>>>>> f7efccab43f779cba0ad85877ac865815704fb4d
 .update-button {
     padding-left: 10%;
     padding-right: 10%;
@@ -224,12 +237,15 @@ input {
 
 .formfield-select--container {
 <<<<<<< HEAD
+<<<<<<< HEAD
     position: relative;
     width:50%;
     float:right;
     margin-right:15%;
 
 =======
+=======
+>>>>>>> f7efccab43f779cba0ad85877ac865815704fb4d
     position: relative; 
 	
 >>>>>>> 05ea5fef9992461cd607d2b9b9c26a9425c336c9
@@ -242,6 +258,10 @@ input {
 		Le select natif pourra
 		dépasser sans être vu
 	*/
+}
+
+.formfield-select--container select:hover {
+    background-color: #222d22;
 }
 
 .formfield-select--container select {
@@ -290,7 +310,10 @@ input {
 	border-style: solid;
 	pointer-events: none;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> f7efccab43f779cba0ad85877ac865815704fb4d
 }
 
 .select-field-with-graph {
@@ -303,7 +326,10 @@ input {
     width:25%;
     margin:auto;
     margin-bottom:2%;
+<<<<<<< HEAD
 >>>>>>> 05ea5fef9992461cd607d2b9b9c26a9425c336c9
+=======
+>>>>>>> f7efccab43f779cba0ad85877ac865815704fb4d
 }
 
 /* .modebar {
