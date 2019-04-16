@@ -184,14 +184,6 @@ html,body {
     color:gray;
 }
 
-<<<<<<< HEAD
-
-/* Message flashing */
-.flash {
-  background-color: #FBB0B0;
-  padding: 20px;
-  width: 100%;
-=======
 input {
     height:30px;
     background-color: darkslategray;
@@ -204,19 +196,19 @@ input {
 }
 
 .formfield-select--container {
-    position: relative; 
+    position: relative;
     width:50%;
     float:right;
     margin-right:15%;
-	
+
 	background-color: darkslategray;
     border: #777 1px solid;
     border-radius:50px;
-	
-	overflow: hidden; 
-	/* 
-		Le select natif pourra 
-		dépasser sans être vu 
+
+	overflow: hidden;
+	/*
+		Le select natif pourra
+		dépasser sans être vu
 	*/
 }
 
@@ -224,48 +216,47 @@ input {
 	-webkit-appearance: none;
 	-moz-appearance: none;
     appearance: none;
-    
+
     background-color:darkslategray;
     color:white;
 
     height:30px !important;
-	width: 100%; 
-	/* 
+	width: 100%;
+	/*
 		On est sûr de ne plus voir
-		la flèche native 
+		la flèche native
 	*/
-	
+
 	height: auto;
-	border: 0; 
+	border: 0;
 	margin: 0;
 	padding-left: 10%;
 	border-radius: 0;
-	
+
 
 	overflow: hidden;
 	text-overflow: ellipsis;
-	/* 
+	/*
 		On empêche le texte d'aller
 		jusqu'au bout s'il est trop long
 	*/
 
 }
 
-.formfield-select--container::after { 
+.formfield-select--container::after {
 	/* Le pointeur du select */
 	content: '';
 	position: absolute;
-	top: 50%; 
+	top: 50%;
 	margin-top: -3px;
-	right: .75em;  
-	display: block; 
+	right: .75em;
+	display: block;
 	width: 0; height: 0;
 	border-color: transparent;
-	border-top-color: white; 
+	border-top-color: white;
 	border-width: 6px;
 	border-style: solid;
 	pointer-events: none;
->>>>>>> c9d3c5f9e9d5c6b5b055750f0dec19f64c794e73
 }
 
 /* .modebar {
