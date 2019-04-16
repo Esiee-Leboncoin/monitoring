@@ -208,6 +208,10 @@ input {
     border:1px solid black;
 }
 
+input:hover {
+    background-color: #222d22;
+}
+
 .update-button {
     padding-left: 10%;
     padding-right: 10%;
@@ -231,6 +235,10 @@ input {
 		Le select natif pourra 
 		dépasser sans être vu 
 	*/
+}
+
+.formfield-select--container select:hover {
+    background-color: #222d22;
 }
 
 .formfield-select--container select {
