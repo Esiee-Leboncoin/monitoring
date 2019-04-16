@@ -43,6 +43,8 @@ def index():
         down_left_collection = users.find_one({'name' : session['username']})["down-left-collection"]
         down_right_collection = users.find_one({'name' : session['username']})["down-right-collection"]
 
+        forms.UpdateGraph(form)
+
         if up_left_collection:
             graphJSON = mongo.get_graph_type(up_left_collection,'rgb(139, 205, 249)')
             users.update({'name' : session['username']}, {'$set': { "up-left-graph": graphJSON } })
@@ -195,7 +197,20 @@ def add_pipeline():
             editordata = request.form.get("editordata")
             pipe = request.form.get("pipe_name")
 
+
             if request.form.get('Test'):
+
+                if pipe[-3:] != ".py":
+                    pipe = pipe + ".py"
+
+                with open("static/pipelines/{}".format(pipe), 'w+') as f:
+                    f.write(editordata)
+                    forms.UpdateEditor(formeditor)
+                    flash("Pipeline importée")
+                
+                if pipe[-3:] == ".py":
+                    pipe = pipe[:-3]
+
                 if 'file' not in request.files:
                     flash('Pas de fichier')
                 else:
@@ -208,16 +223,21 @@ def add_pipeline():
                         filename = secure_filename(file.filename)
                         file.save("static/data/{}".format(filename))
                         flash('Fichier importé')
+                        
+                        pipeline, modele, features, target = pipelines.get_pipelines("static/pipelines/", pipe)
+                        data = pipelines.load_data("static/data/{}".format(filename))
+                        pipelines.compute_performance(pipeline, modele, df=data, features=features ,target=target)
                     else:
                         flash('Fichier non pris en charge') 
 
-            if pipe[-3:] != ".py":
-                pipe = pipe + ".py"
+            else:
+                if pipe[-3:] != ".py":
+                    pipe = pipe + ".py"
 
-            with open("static/pipelines/{}".format(pipe), 'w+') as f:
-                f.write(editordata)
-                forms.UpdateEditor(formeditor)
-                flash("Pipeline importée")    
+                with open("static/pipelines/{}".format(pipe), 'w+') as f:
+                    f.write(editordata)
+                    forms.UpdateEditor(formeditor)
+                    flash("Pipeline importée")    
                 
 
         return render_template('add_pipeline.html', pipe_name = "default", default = default, formeditor = formeditor, active_item="active_add")

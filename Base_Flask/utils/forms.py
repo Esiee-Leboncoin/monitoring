@@ -46,3 +46,9 @@ class PipelineSelectEditor(Form):
 
 def UpdateEditor(form):
     form.pipToEdit.choices = [(g, g) for g in pipelines.get_all_pipes_names("static/pipelines")]
+
+def UpdateGraph(form):
+    all_collections = mongo.db.collection_names()
+    if ("users" in all_collections):
+        all_collections.remove("users")
+    form.myField.choices = [(g, g) for g in all_collections]

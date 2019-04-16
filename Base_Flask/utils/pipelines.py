@@ -16,6 +16,8 @@ from os import listdir
 from os.path import isfile, join
 import importlib.util
 
+from . import bdd
+
 
 def add_metadata_property(obj, name):
     '''
@@ -130,7 +132,7 @@ def compute_performance(pipeline, modele, df,  features, target, BDD=True):
         result['Time'] = datetime.datetime.now()
         result["_id"] = pipeline.name + "." + str(result['Time'])
         result["Type"] = modele
-        mongo = MongoDB("database_pipeline")
+        mongo = bdd.MongoDB("database_pipeline")
         mongo.insert_one(pipeline.name, result)
 
     return result
@@ -298,12 +300,7 @@ def get_pipelines(path, pipe_name):
     modele = module.modele
     features = module.features
     target = module.target
-    data = module.data
 
     # Ajout d'un nom à la pipeline
     add_metadata_property(pipeline, pipe_name)
-    return pipeline, modele, features, target, data
-
-#pipeline, modele, features, target, data = get_pipelines("../statict/pipelines", "pipe_test_1")
-#data = load_data("../static/data/{}".format("headbrain.csv"))
-#compute_performance(pipeline, modele, df=data, features=features ,target=target)
+    return pipeline, modele, features, target
