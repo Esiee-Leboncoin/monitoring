@@ -192,11 +192,6 @@ html,body {
     color:gray;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> f7efccab43f779cba0ad85877ac865815704fb4d
 
 /* Message flashing */
 .flash {
@@ -205,10 +200,7 @@ html,body {
   width: 100%;
 }
 
-<<<<<<< HEAD
->>>>>>> 05ea5fef9992461cd607d2b9b9c26a9425c336c9
-=======
->>>>>>> f7efccab43f779cba0ad85877ac865815704fb4d
+
 input {
     height:30px;
     background-color: darkslategray;
@@ -217,13 +209,11 @@ input {
     border:1px solid black;
 }
 
-<<<<<<< HEAD
-=======
 input:hover {
     background-color: #222d22;
 }
 
->>>>>>> f7efccab43f779cba0ad85877ac865815704fb4d
+
 .update-button {
     padding-left: 10%;
     padding-right: 10%;
@@ -236,19 +226,10 @@ input:hover {
 }
 
 .formfield-select--container {
-<<<<<<< HEAD
-<<<<<<< HEAD
     position: relative;
     width:50%;
     float:right;
     margin-right:15%;
-
-=======
-=======
->>>>>>> f7efccab43f779cba0ad85877ac865815704fb4d
-    position: relative; 
-	
->>>>>>> 05ea5fef9992461cd607d2b9b9c26a9425c336c9
 	background-color: darkslategray;
     border: #777 1px solid;
     border-radius:50px;
@@ -309,11 +290,6 @@ input:hover {
 	border-width: 6px;
 	border-style: solid;
 	pointer-events: none;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> f7efccab43f779cba0ad85877ac865815704fb4d
 }
 
 .select-field-with-graph {
@@ -326,10 +302,6 @@ input:hover {
     width:25%;
     margin:auto;
     margin-bottom:2%;
-<<<<<<< HEAD
->>>>>>> 05ea5fef9992461cd607d2b9b9c26a9425c336c9
-=======
->>>>>>> f7efccab43f779cba0ad85877ac865815704fb4d
 }
 
 /* .modebar {
