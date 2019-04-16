@@ -224,32 +224,6 @@ def add_pipeline():
 
     return render_template('index.html')
 
-#Route
-@app.route('/add_data', methods=['POST', 'GET'])
-def add_data():
-    if 'username' in session:
-        if request.method == 'POST':
-            # check if the post request has the file part
-            if 'file' not in request.files:
-                flash('Pas de fichier')
-
-            else:
-                file = request.files['file']
-
-                if file.filename == '':
-                    flash('Fichier sans extension')
-
-                if file and allowed_file(file.filename):
-                    filename = secure_filename(file.filename)
-                    file.save("static/data/{}".format(filename))
-                    flash('Fichier importé')
-                else:
-                    flash('Fichier non pris en charge')
-
-        return render_template('add_data.html')
-
-    return render_template('index.html')
-
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
