@@ -224,7 +224,7 @@ def add_data():
 
                 if file and allowed_file(file.filename):
                     filename = secure_filename(file.filename)
-                    file.save("static/data/{}".format(filename))
+                    file.save("/static/data/{}".format(filename))
                 else:
                     flash('Fichier non pris en charge')
 
