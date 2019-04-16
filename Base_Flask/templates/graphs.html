@@ -16,25 +16,23 @@
         </a>
         <form action="" method="post" name="Graph">
             <div class="col-sm-6">
-                <div class="formfield-select--container">
+                <div class="formfield-select--container select-field-with-graph">
                     {{form.myField()}}
                 </div>
             </div>
             <div class="col-sm-6">
-                <input type=submit value="Update">
+                <input class="update-button" type=submit value="Update">
             </div>
         </form>
         {% else %}
-        <div href="/">
-            <div class="no_graph">
-                <img src="../static/graph_icon.png">
-                <form action="" method="post" name="Graph">
-                    <div>
-                        {{form.myField()}}
-                    </div>
-                    <input type=submit value="Select">
-                </form>
-            </div>
+        <div class="no_graph">
+            <img src="../static/graph_icon.png">
+            <form class="no-graph-form" action="" method="post" name="Graph">
+                <div class="formfield-select--container select-field-without-graph">
+                    {{form.myField()}}
+                </div>
+                <input class="select-button" type=submit value="Select">
+            </form>
         </div>
         {% endif %}
     </div>
@@ -47,25 +45,23 @@
         </a>
         <form action="" method="post" name="Graph">
             <div class="col-sm-6">
-                <div class="formfield-select--container">
+                <div class="formfield-select--container select-field-with-graph">
                     {{form2.myField2()}}
                 </div>
             </div>
             <div class="col-sm-6">
-                <input type=submit value="Update">
+                <input class="update-button" type=submit value="Update">
             </div>
         </form>
         {% else %}
-        <div href="/dashboard-2">
-            <div class="no_graph">
-                <img src="../static/graph_icon.png">
-                <form action="" method="post" name="Graph">
-                    <div>
-                        {{form2.myField2()}}
-                    </div>
-                    <input type=submit value="Select">
-                </form>
-            </div>
+        <div class="no_graph">
+            <img src="../static/graph_icon.png">
+            <form class="no-graph-form" action="" method="post" name="Graph">
+                <div class="formfield-select--container select-field-without-graph">
+                    {{form2.myField2()}}
+                </div>
+                <input class="select-button" type=submit value="Select">
+            </form>
         </div>
         {% endif %}
     </div>
@@ -80,25 +76,23 @@
         </a>
         <form action="" method="post" name="Graph">
             <div class="col-sm-6">
-                <div class="formfield-select--container">
+                <div class="formfield-select--container select-field-with-graph">
                     {{form3.myField3()}}
                 </div>
             </div>
             <div class="col-sm-6">
-                <input type=submit value="Update">
+                <input class="update-button" type=submit value="Update">
             </div>
         </form>
         {% else %}
-        <div href="/dashboard-3">
-            <div class="no_graph">
-                <img src="../static/graph_icon.png">
-                <form action="" method="post" name="Graph">
-                    <div>
-                        {{form3.myField3()}}
-                    </div>
-                    <input type=submit value="Select">
-                </form>
-            </div>
+        <div class="no_graph">
+            <img src="../static/graph_icon.png">
+            <form class="no-graph-form" action="" method="post" name="Graph">
+                <div class="formfield-select--container select-field-without-graph">
+                    {{form3.myField3()}}
+                </div>
+                <input class="select-button" type=submit value="Select">
+            </form>
         </div>
         {% endif %}
     </div>
@@ -111,25 +105,23 @@
         </a>
         <form action="" method="post" name="Graph">
             <div class="col-sm-6">
-                <div class="formfield-select--container">
+                <div class="formfield-select--container select-field-with-graph">
                     {{form4.myField4()}}
                 </div>
             </div>
             <div class="col-sm-6">
-                <input type=submit value="Update">
+                <input class="update-button" type=submit value="Update">
             </div>
         </form>
         {% else %}
-        <div href="/dashboard-4">
-            <div class="no_graph">
-                <img src="../static/graph_icon.png">
-                <form action="" method="post" name="Graph">
-                    <div>
-                        {{form4.myField4()}}
-                    </div>
-                    <input type=submit value="Select">
-                </form>
-            </div>
+        <div class="no_graph">
+            <img src="../static/graph_icon.png">
+            <form class="no-graph-form" action="" method="post" name="Graph">
+                <div class="formfield-select--container select-field-without-graph">
+                    {{form4.myField4()}}
+                </div>
+                <input class="select-button" type=submit value="Select">
+            </form>
         </div>
         {% endif %}
     </div>

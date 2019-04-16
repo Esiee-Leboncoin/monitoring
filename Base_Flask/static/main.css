@@ -130,6 +130,14 @@ html,body {
     right: 0;
 }
 
+.no_graph form {
+    position: absolute;
+    margin: auto;
+    bottom: 15%;
+    left: 0;
+    right: 0;
+}
+
 .main-analysis {
     border: 1px solid gray;
 }
@@ -184,23 +192,47 @@ html,body {
     color:gray;
 }
 
+<<<<<<< HEAD
+=======
+
+/* Message flashing */
+.flash {
+  background-color: #FBB0B0;
+  padding: 20px;
+  width: 100%;
+}
+
+>>>>>>> 05ea5fef9992461cd607d2b9b9c26a9425c336c9
 input {
     height:30px;
     background-color: darkslategray;
     color:white;
     border-radius:50px;
     border:1px solid black;
+}
+
+.update-button {
     padding-left: 10%;
     padding-right: 10%;
     margin-left: 20%;
 }
 
+.select-button {
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
 .formfield-select--container {
+<<<<<<< HEAD
     position: relative;
     width:50%;
     float:right;
     margin-right:15%;
 
+=======
+    position: relative; 
+	
+>>>>>>> 05ea5fef9992461cd607d2b9b9c26a9425c336c9
 	background-color: darkslategray;
     border: #777 1px solid;
     border-radius:50px;
@@ -257,6 +289,21 @@ input {
 	border-width: 6px;
 	border-style: solid;
 	pointer-events: none;
+<<<<<<< HEAD
+=======
+}
+
+.select-field-with-graph {
+    width:50%;
+    float:right;
+    margin-right:15%;
+}
+
+.select-field-without-graph {
+    width:25%;
+    margin:auto;
+    margin-bottom:2%;
+>>>>>>> 05ea5fef9992461cd607d2b9b9c26a9425c336c9
 }
 
 /* .modebar {
