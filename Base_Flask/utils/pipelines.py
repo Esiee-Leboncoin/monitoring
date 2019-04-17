@@ -336,6 +336,9 @@ def get_pipelines(path, pipe_name):
             target: liste des target
             data: nom du fichier (str) cotenant les données
     '''
+    if pipe_name[-3:] != ".py":
+        pipe_name += ".py"
+
     spec = importlib.util.spec_from_file_location("module.name", path+pipe_name)
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
