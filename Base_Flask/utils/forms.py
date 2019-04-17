@@ -41,11 +41,11 @@ class PipelineSelectEditor(Form):
     display = SubmitField(label='Afficher')
     delete = SubmitField(label='Supprimer')
     all_pipes = pipelines.get_all_pipes_names("static/pipelines")
-    all_pipes = [(g, g) for g in pipelines.get_all_pipes_names("static/pipelines")]
+    all_pipes = [(g[:-3], g[:-3]) for g in pipelines.get_all_pipes_names("static/pipelines")]
     pipToEdit = SelectField(choices = all_pipes)
 
 def UpdateEditor(form):
-    form.pipToEdit.choices = [(g, g) for g in pipelines.get_all_pipes_names("static/pipelines")]
+    form.pipToEdit.choices = [(g[:-3], g[:-3]) for g in pipelines.get_all_pipes_names("static/pipelines")]
 
 def UpdateGraph(form):
     all_collections = mongo.db.collection_names()
