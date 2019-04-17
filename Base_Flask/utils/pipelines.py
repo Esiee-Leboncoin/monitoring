@@ -226,7 +226,11 @@ def compute_regression(pipeline, df, features, target):
     scoring = {"variance" : "explained_variance",
                "r2" : "r2",
                "mse" : "neg_mean_squared_error"}
+<<<<<<< HEAD
     result = cross_validate(pipeline, df[features], df[target], cv=7, scoring=scoring)
+=======
+    result = cross_validate(pipeline, df[features], df[target], cv=5, scoring=scoring)
+>>>>>>> 27e8f0af02aa7854c3b2ccd3897c2f315fe89f63
     variance = np.mean(result["test_variance"])
     r2 = np.mean(result["test_r2"])
     rmse = np.mean(np.sqrt(np.absolute(result["test_mse"])))
