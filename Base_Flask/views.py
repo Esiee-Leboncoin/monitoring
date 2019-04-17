@@ -117,12 +117,11 @@ def analysis(pipeline):
 @app.route('/history', methods=['POST', 'GET'])
 def history():
     if 'username' in session:
-        #all_collections = mongo.db.collection_names()
-        #if ("users" in all_collections):
-        #    all_collections.remove("users")
-        #for c in all_collections:
-        #    pipeline_list = mongo.db[c].find().sort([("Time", pymongo.DESCENDING)])
-        pipeline_list = mongo.db["pipe_romain"].find().sort([("Time", pymongo.DESCENDING)])
+        all_collections = mongo.db.collection_names()
+        if ("users" in all_collections):
+            all_collections.remove("users")
+        for c in all_collections:
+            pipeline_list = mongo.db[c].find().sort([("Time", pymongo.DESCENDING)])
         pipeline_info = []
         for elt in pipeline_list:
             if elt["Type"] == "classification":
@@ -229,9 +228,9 @@ def add_pipeline():
                 editordata = request.form.get("editordata")
                 pipe = request.form.get("pipe_name")
 
-                pipelines.save(pipe_name, "static/pipelines/", editordata)
+                pipelines.save(pipe, "static/pipelines/", editordata)
                 forms.UpdateEditor(formeditor)
-                flash("Pipeline {} importée".format(pipe_name))
+                flash("Pipeline {} importée".format(pipe))
 
                 if 'file' not in request.files:
                     flash('Pas de fichier')
