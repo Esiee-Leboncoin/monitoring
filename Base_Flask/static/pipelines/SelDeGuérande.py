@@ -1,14 +1,13 @@
-from sklearn import svm
 from sklearn.pipeline import Pipeline
+from sklearn import svm
 from sklearn.preprocessing import StandardScaler
 
 modele = "classification"
-features = ["Age Range", "Head Size(cm^3)"]
-target = ["Brain Weight(grams)"]
-data = "headbrain.csv"
+features = ["sepal_length", "sepal_width", "petal_length", "petal_width"]
+target = ["species"]
+data = "iris.csv"
 
 pipeline = Pipeline([
     ('features', StandardScaler()),
     ('estimator', svm.SVC())
 ])
-
