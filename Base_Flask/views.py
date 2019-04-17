@@ -224,7 +224,7 @@ def add_pipeline():
                         file.save("static/data/{}".format(filename))
                         flash('Fichier importé')
 
-                        pipeline, modele, features, target = pipelines.get_pipelines("static/pipelines/", pipe)
+                        pipeline, modele, features, target, data = pipelines.get_pipelines("static/pipelines/", pipe)
                         data = pipelines.load_data("static/data/{}".format(filename))
                         pipelines.compute_performance(pipeline, modele, df=data, features=features ,target=target)
                     else:

@@ -207,10 +207,6 @@ input {
     border:1px solid black;
 }
 
-input:hover {
-    background-color: #222d22;
-}
-
 .update-button {
     padding-left: 10%;
     padding-right: 10%;
@@ -305,6 +301,103 @@ input:hover {
     margin:auto;
     margin-bottom:2%;
 }
+
+#add-header {
+    text-align:center;
+}
+
+.pipeline-form-select {
+    padding:0;
+}
+
+.pipeline-form-input {
+    padding:0;
+    text-align: center;
+}
+
+.pipeline-form-input input {
+    padding-left:10%;
+    padding-right:10%;
+}
+
+#pip-to-edit {
+    width:50%;
+    margin:auto;
+}
+
+#add-header {
+    height:10%;
+}
+
+#add-form {
+    height:5%%;
+}
+
+#add-main {
+    height:90%;
+}
+
+#add-sub-main {
+    height:60%;
+}
+
+#add-data {
+    height:100%;
+    /* display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    height: 100%;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center; */
+}
+
+#add-footer {
+    height:10%;
+    text-align: center;
+}
+
+#pipeline-editor-container {
+    margin-top:2%;
+}
+
+.pipeline-editor-text-center {
+    text-align:center;
+}
+
+#pipeline-editor-textarea{
+    margin-top:2%;
+    margin-bottom:2%;
+}
+
+#pipeline-editor-textarea div{
+    margin:auto;
+}
+
+#editor {
+    margin:auto;
+}
+
+#save-button {
+    padding-left:5%;
+    padding-right:5%;
+}
+
+#file-button {
+    height:unset;
+    margin:auto;
+}
+
+#test-button {
+    height:100%;
+    width:20%;
+    font-weight: bold;
+    font-size: 22px;
+}
+
 
 /* .modebar {
     display:none !important;
