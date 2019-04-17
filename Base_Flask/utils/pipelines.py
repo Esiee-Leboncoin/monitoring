@@ -175,6 +175,10 @@ def compute_performance(pipeline, modele, df,  features, target, BDD=True):
         return -1
 
     if BDD == True:
+
+        if pipeline.name[-3:] == ".py":
+                    pipeline.name = pipeline.name[:-3]
+
         result['Time'] = datetime.datetime.now()
         result["_id"] = pipeline.name + "." + str(result['Time'])
         result["Type"] = modele

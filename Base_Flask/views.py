@@ -12,7 +12,7 @@ import os
 from werkzeug.utils import secure_filename
 import threading
 import dateutil.parser as parser
-import re
+import random
 
 # Initialisation et chargment du fichier Config
 app = Flask(__name__)
@@ -45,7 +45,10 @@ def index():
         down_left_collection = users.find_one({'name' : session['username']})["down-left-collection"]
         down_right_collection = users.find_one({'name' : session['username']})["down-right-collection"]
 
-        forms.UpdateGraph(form)
+        forms.UpdateGraph(form, form.myField.name)
+        forms.UpdateGraph(form2, form2.myField2.name)
+        forms.UpdateGraph(form3, form3.myField3.name)
+        forms.UpdateGraph(form4, form4.myField4.name)
 
         if up_left_collection:
             graphJSON = mongo.get_graph_type(up_left_collection,'rgb(139, 205, 249)')
@@ -92,6 +95,8 @@ def analysis(pipeline):
 
         pipelineForm = forms.PipelineToAnalyse(request.form)
 
+        forms.UpdateGraph(pipelineForm, pipelineForm.pipelineToAnalyse.name)
+
         if pipelineForm.validate():
             pipelineName = pipelineForm.pipelineToAnalyse.data
             return redirect(url_for('analysis', pipeline=pipelineName))
@@ -125,9 +130,9 @@ def history():
             pipeline_list = mongo.db[c].find().sort([("Time", pymongo.DESCENDING)])
             for elt in pipeline_list:
                 if elt["Type"] == "classification":
-                    pipeline_info.append([" ID : "+str(elt["_id"])," | Pipeline Type : " +str(elt["Type"])," Accuracy : "+str(elt["Accuracy"])," | Precision : " +str(elt["Precision"])," | F1 : " +str(elt["F1"])," | Recall : "+ str(elt["Recall"])])
+                    pipeline_info.append([str(elt['_id']).split('.')[0] , " ID : "+str(elt["_id"])," | Pipeline Type : " +str(elt["Type"])," Accuracy : "+str(elt["Accuracy"])," | Precision : " +str(elt["Precision"])," | F1 : " +str(elt["F1"])," | Recall : "+ str(elt["Recall"])])
                 elif elt["Type"] == "regression":
-                    pipeline_info.append([" ID : "+str(elt["_id"])," | Pipeline Type : " +str(elt["Type"])," R2 : "+str(elt["R2"])," | Variance : " +str(elt["Variance"])," | RMSE : " +str(elt["RMSE"])," | Med : "+ str(elt["med_inter"])])
+                    pipeline_info.append([str(elt['_id']).split('.')[0] , " ID : "+str(elt["_id"])," | Pipeline Type : " +str(elt["Type"])," R2 : "+str(elt["R2"])," | Variance : " +str(elt["Variance"])," | RMSE : " +str(elt["RMSE"])," | Med : "+ str(elt["med_inter"])])
         return render_template('history.html', username = session['username'],pipeline_info = pipeline_info, active_item="active_history")
 
     return render_template('index.html')
@@ -186,6 +191,8 @@ def add_pipeline():
         formeditor = forms.PipelineSelectEditor(request.form)
         default = pipelines.txt("default", "static/pipelines/")
 
+        forms.UpdateEditor(formeditor)
+
         if request.method == 'POST':
             if formeditor.validate():
                 pipe_name = formeditor.pipToEdit.data
@@ -222,14 +229,12 @@ def add_pipeline():
                 return render_template('add_pipeline.html',  pipe_name = pipe_name, default = editordata, formeditor = formeditor,
                                         username = session['username'], active_item="active_add")
 
-            #Enregistre seulement la pipeline puis effectue les caluls de performance dessus
+            #Enregistre la pipeline puis effectue les caluls de performance dessus
             if request.form.get('Test'):
 
                 editordata = request.form.get("editordata")
                 pipe_name = request.form.get("pipe_name")
                 pipelines.save(pipe_name, "static/pipelines/", editordata)
-                forms.UpdateEditor(formeditor)
-                flash("Pipeline {} importée".format(pipe_name))
 
                 if 'file' not in request.files:
                     flash('Pas de fichier')
@@ -243,16 +248,23 @@ def add_pipeline():
                     elif file and allowed_file(file.filename):
                         filename = secure_filename(file.filename)
                         file.save("static/data/{}".format(filename))
-                        flash('Fichier importé')
 
                         #Calcul des performances
                         #try:
                         pipeline, modele, features, target, data = pipelines.get_pipelines("static/pipelines/", pipe_name)
                         data = pipelines.load_data("static/data/{}".format(filename))
+
+                        # Code à utiliser simplement pour la présentation
+                        data = data.sample(frac=0.95,random_state = random.randint(0,1000))
+                        data.reset_index(drop = True, inplace = True)
+                        # Code à utiliser simplement pour la présentation
+                        
                         pipelines.compute_performance(pipeline, modele, df=data, features=features ,target=target)
-                        flash("Test effectué")
                         #except Exception as e:
                         #    flash(e)
+
+                        return redirect(url_for('analysis', pipeline = pipe_name))
+
                     else:
                         flash('Fichier non pris en charge')
 
