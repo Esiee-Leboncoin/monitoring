@@ -14,17 +14,16 @@ from sklearn.metrics import precision_recall_fscore_support
 from os import listdir
 from os.path import isfile, join
 import importlib.util
-import schedule
+from apscheduler.schedulers.background import BackgroundScheduler
 import time
 
 from . import bdd
 
 class autoperform():
     def __init__(self):
-        schedule.every(5).seconds.do(self.job)
-        while True:
-            schedule.run_pending()
-            time.sleep(1)
+        scheduler = BackgroundScheduler()
+        scheduler.add_job(self.job, 'interval', days=1)
+        scheduler.start()
 
     def job(self):
         all_pipes = get_all_pipes_names("static/pipelines")
@@ -33,8 +32,6 @@ class autoperform():
             pipeline, modele, features, target, data = get_pipelines("static/pipelines/", pipe)
             data = load_data("static/data/{}".format(data))
             compute_performance(pipeline, modele, df=data, features=features ,target=target)
-
-from . import bdd
 
 
 def add_metadata_property(obj, name):
@@ -62,6 +59,7 @@ def load_data(path):
     '''
     #On récupère le nom de l'extension du fichier
     type = path.split(".")[-1]
+
     #Selection de la bonne fonction de pandas à utiliser
     func_to_call = 'read_{}'.format(type)
 
@@ -142,7 +140,6 @@ def compute_performance(pipeline, modele, df,  features, target, BDD=True):
     elif(modele == "classification"):
         print("Choix du type d'estimateur : Classification \n")
         result = compute_classification(pipeline, df, features, target)
-
     else:
         return -1
 
@@ -198,7 +195,6 @@ def compute_regression(pipeline, df, features, target):
     result = {"r2": r2, "variance": variance, "rmse": rmse, "min_inter" : min_inter, "max_inter" : max_inter, "med_inter": med_inter}
 
     return result
-
 
 def compute_classification(pipeline, df, features, target):
     '''
@@ -318,7 +314,8 @@ def get_pipelines(path, pipe_name):
     modele = module.modele
     features = module.features
     target = module.target
+    data = module.data
 
     # Ajout d'un nom à la pipeline
     add_metadata_property(pipeline, pipe_name)
-    return pipeline, modele, features, target
+    return pipeline, modele, features, target, data

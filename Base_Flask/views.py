@@ -10,6 +10,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 from werkzeug.utils import secure_filename
+import threading
 
 # Initialisation et chargment du fichier Config
 app = Flask(__name__)
@@ -17,9 +18,7 @@ app.config.from_object(config)
 
 #Initialisation de la base de donnee
 mongo = bdd.MongoDB("database_pipeline")
-
-pipelines.autoperform()
-
+threading.Thread(None, pipelines.autoperform())
 #app.config['MONGO_URI'] = 'mongodb://localhost:27017/database_pipeline'
 
 # Route principale de l'application Flask
@@ -208,7 +207,7 @@ def add_pipeline():
                     f.write(editordata)
                     forms.UpdateEditor(formeditor)
                     flash("Pipeline importée")
-                
+
                 if pipe[-3:] == ".py":
                     pipe = pipe[:-3]
 
@@ -224,12 +223,12 @@ def add_pipeline():
                         filename = secure_filename(file.filename)
                         file.save("static/data/{}".format(filename))
                         flash('Fichier importé')
-                        
+
                         pipeline, modele, features, target = pipelines.get_pipelines("static/pipelines/", pipe)
                         data = pipelines.load_data("static/data/{}".format(filename))
                         pipelines.compute_performance(pipeline, modele, df=data, features=features ,target=target)
                     else:
-                        flash('Fichier non pris en charge') 
+                        flash('Fichier non pris en charge')
 
             else:
                 if pipe[-3:] != ".py":
@@ -238,8 +237,8 @@ def add_pipeline():
                 with open("static/pipelines/{}".format(pipe), 'w+') as f:
                     f.write(editordata)
                     forms.UpdateEditor(formeditor)
-                    flash("Pipeline importée")    
-                
+                    flash("Pipeline importée")
+
 
         return render_template('add_pipeline.html', pipe_name = "default", default = default, formeditor = formeditor, active_item="active_add")
 
