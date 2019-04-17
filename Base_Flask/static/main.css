@@ -192,7 +192,6 @@ html,body {
     color:gray;
 }
 
-<<<<<<< HEAD
 .hist_container {
   padding : 5px;
   overflow : auto;
@@ -220,10 +219,6 @@ html,body {
 }
 
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 2acb770dee8c6080204aeef63c07c3a7a17054df
 /* Message flashing */
 .flash {
   background-color: #FBB0B0;
@@ -259,7 +254,7 @@ input {
 }
 
 .formfield-select--container {
-    position: relative; 
+    position: relative;
 	background-color: darkslategray;
     border: #777 1px solid;
     border-radius:50px;
