@@ -1,11 +1,13 @@
-from sklearn import neighbors
+from sklearn import svm
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 
-def get_name():
-    return "caribou.py"
+modele = "classification"
+features = ["Age Range", "Head Size(cm^3)"]
+target = ["Brain Weight(grams)"]
+data = "headbrain.csv"
 
 pipeline = Pipeline([
     ('features', StandardScaler()),
-    ('estimator', neighbors.KNeighborsRegressor())   
+    ('estimator', svm.SVC())  
 ])

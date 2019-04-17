@@ -1,0 +1,272 @@
+html,body {
+    height:100%;
+    width:100%;
+    margin:auto;
+    overflow: hidden;
+}
+
+#active_home {
+    background-color:#c4d8ed;
+}
+
+#active_analysis {
+    background-color:#c4d8ed;
+}
+
+#active_history {
+    background-color:#c4d8ed;
+}
+
+#active_add {
+    background-color:#c4d8ed;
+}
+
+.btn {
+    background-color:#f56b2a;
+}
+
+.btn:hover {
+    background-color:#222d22;
+}
+
+#title {
+    text-align:center;
+}
+
+#title-bar {
+    width:100%;
+    background-color: #f56b2a   ;
+}
+
+#title-content {
+    height:100%;
+    padding:0;
+    border-right:1px solid black;
+}
+
+.top-link-style {
+    color:white;
+}
+
+#navbar {
+    float:right;
+    padding-right:0;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    color: white;
+}
+
+.navbar-brand:hover, .navbar-brand:focus {
+    color:white;
+}
+
+
+#main {
+    width:100%;
+    height:95%;
+}
+
+.main-content {
+    height:100%;
+    padding:0;
+}
+
+.sidebar-content {
+    height:100%;
+    padding:0;
+    background-color: #eaeffa;
+    border: 1px solid #c4d8ed;
+}
+
+.side-item {
+    border-bottom:1px #c4d8ed solid;
+}
+
+.side-item > a {
+    color:black;
+}
+
+.nav > li >a:hover, .nav > li >a:focus {
+    color:#f56b2a;
+    background-color: #c4d8ed;
+}
+
+.row {
+    margin:0;
+}
+
+.chart {
+    height:85%;
+}
+
+.chart-rows {
+    height:50%;
+}
+
+#chart-section {
+    height:100%;
+}
+
+.chart-block {
+    height:100%;
+    width:50%;
+    border:1px solid gray;
+}
+
+.no_graph {
+    height:100%;    
+    text-align:center;
+}
+
+.no_graph img {
+    width:100px;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.main-analysis {
+    border: 1px solid gray;
+}
+
+.analysis-block {
+    height:50%;
+    width:100%;
+    margin:auto;
+    text-align: center;
+}
+
+#pipeline-title {
+    font-size:20px;
+    line-height:60px;
+    width:100%;
+    color:gray;
+}
+
+.pipeline-field {
+    height:60%;
+    width:60%;
+    margin:auto;
+    display:flex;
+    flex-direction: column; 
+    justify-content: center;
+    border-radius:50%;
+    border: 2px solid black;
+    color:white;
+}
+
+#green-field {
+    background-color: green;
+}
+
+#orange-field {
+    background-color: orange;
+}
+
+#red-field {
+    background-color: red;
+}
+
+#pipeline-score {
+    margin:auto;
+    font-size:45px;
+}
+
+#pipeline-score-description {
+    font-size:20px;
+    line-height:60px;
+    width:100%;
+    color:gray;
+}
+
+input {
+    height:30px;
+    background-color: #eaeffa;
+    color:black;
+    border-radius:50px;
+    border:1px solid black;
+    padding-left: 10%;
+    padding-right: 10%;
+    margin-left: 20%;
+}
+
+.formfield-select--container {
+    position: relative; 
+    width:50%;
+    float:right;
+    margin-right:15%;
+	
+	background-color: #eaeffa;
+    border: #777 1px solid;
+    border-radius:50px;
+	
+	overflow: hidden; 
+	/* 
+		Le select natif pourra 
+		dépasser sans être vu 
+	*/
+}
+
+.formfield-select--container select {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+    appearance: none;
+    
+    background-color:#eaeffa;
+    color:black;
+
+    height:30px !important;
+	width: 100%; 
+	/* 
+		On est sûr de ne plus voir
+		la flèche native 
+	*/
+	
+	height: auto;
+	border: 0; 
+	margin: 0;
+	padding-left: 10%;
+	border-radius: 0;
+	
+
+	overflow: hidden;
+	text-overflow: ellipsis;
+	/* 
+		On empêche le texte d'aller
+		jusqu'au bout s'il est trop long
+	*/
+
+}
+
+.formfield-select--container::after { 
+	/* Le pointeur du select */
+	content: '';
+	position: absolute;
+	top: 50%; 
+	margin-top: -3px;
+	right: .75em;  
+	display: block; 
+	width: 0; height: 0;
+	border-color: transparent;
+	border-top-color: black; 
+	border-width: 6px;
+	border-style: solid;
+	pointer-events: none;
+}
+
+/* .modebar {
+    display:none !important;
+} */
+
+/* #link {
+    height:75%;
+    width:100%;
+    position:absolute;
+    top:10%;
+    z-index: 10;
+} */
