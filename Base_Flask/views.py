@@ -226,11 +226,10 @@ def add_pipeline():
             if request.form.get('Test'):
 
                 editordata = request.form.get("editordata")
-                pipe = request.form.get("pipe_name")
-
-                pipelines.save(pipe, "static/pipelines/", editordata)
+                pipe_name = request.form.get("pipe_name")
+                pipelines.save(pipe_name, "static/pipelines/", editordata)
                 forms.UpdateEditor(formeditor)
-                flash("Pipeline {} importée".format(pipe))
+                flash("Pipeline {} importée".format(pipe_name))
 
                 if 'file' not in request.files:
                     flash('Pas de fichier')
@@ -247,16 +246,17 @@ def add_pipeline():
                         flash('Fichier importé')
 
                         #Calcul des performances
-                        try:
-                            pipeline, modele, features, target, data = pipelines.get_pipelines("static/pipelines/", pipe)
-                            data = pipelines.load_data("static/data/{}".format(filename))
-                            pipelines.compute_performance(pipeline, modele, df=data, features=features ,target=target)
-                        except Exception as e:
-                            flash(e)
+                        #try:
+                        pipeline, modele, features, target, data = pipelines.get_pipelines("static/pipelines/", pipe_name)
+                        data = pipelines.load_data("static/data/{}".format(filename))
+                        pipelines.compute_performance(pipeline, modele, df=data, features=features ,target=target)
+                        flash("Test effectué")
+                        #except Exception as e:
+                        #    flash(e)
                     else:
                         flash('Fichier non pris en charge')
 
-                    return render_template('add_pipeline.html',  pipe_name = pipe, default = editordata, formeditor = formeditor,
+                    return render_template('add_pipeline.html',  pipe_name = pipe_name, default = editordata, formeditor = formeditor,
                                             username = session['username'], active_item="active_add")
 
         return render_template('add_pipeline.html', pipe_name = "default", default = default, formeditor = formeditor,
