@@ -11,3 +11,4 @@ pipeline = Pipeline([
     ('features', StandardScaler()),
     ('estimator', svm.SVC())
 ])
+

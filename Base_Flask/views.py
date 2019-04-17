@@ -11,6 +11,8 @@ import matplotlib.pyplot as plt
 import os
 from werkzeug.utils import secure_filename
 import threading
+import dateutil.parser as parser
+import re
 
 # Initialisation et chargment du fichier Config
 app = Flask(__name__)
@@ -115,8 +117,19 @@ def analysis(pipeline):
 @app.route('/history', methods=['POST', 'GET'])
 def history():
     if 'username' in session:
-
-        return render_template('history.html', username = session['username'], active_item="active_history")
+        #all_collections = mongo.db.collection_names()
+        #if ("users" in all_collections):
+        #    all_collections.remove("users")
+        #for c in all_collections:
+        #    pipeline_list = mongo.db[c].find().sort([("Time", pymongo.DESCENDING)])
+        pipeline_list = mongo.db["pipe_romain"].find().sort([("Time", pymongo.DESCENDING)])
+        pipeline_info = []
+        for elt in pipeline_list:
+            if elt["Type"] == "classification":
+                pipeline_info.append([" ID : "+str(elt["_id"])," | Pipeline Type : " +str(elt["Type"])," Accuracy : "+str(elt["Accuracy"])," | Precision : " +str(elt["Precision"])," | F1 : " +str(elt["F1"])," | Recall : "+ str(elt["Recall"])])
+            elif elt["Type"] == "regression":
+                pipeline_info.append([" ID : "+str(elt["_id"])," | Pipeline Type : " +str(elt["Type"])," R2 : "+str(elt["R2"])," | Variance : " +str(elt["Variance"])," | RMSE : " +str(elt["RMSE"])," | Med : "+ str(elt["med_inter"])])
+        return render_template('history.html', username = session['username'],pipeline_info = pipeline_info, active_item="active_history")
 
     return render_template('index.html')
 
@@ -251,6 +264,7 @@ def add_pipeline():
                                 username = session['username'], active_item="active_add")
 
     return render_template('index.html')
+
 
 def allowed_file(filename):
     return '.' in filename and \
