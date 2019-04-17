@@ -1,12 +1,17 @@
 {% extends "main.html" %}
 {% block content %}
-
-<div class="col-sm-6 main-content">
-
+<div class="hist_container">
+	{% for elt in pipeline_info %}
+	<div class="history_cell">
+		<h1><strong>{{elt[0]}} {{elt[1]}}</strong></h1>
+		<h2>{{elt[2]}}{{elt[3]}}{{elt[4]}}{{elt[5]}}</h2>
+	</div>
+	{% endfor %}
 </div>
 
-<div class="col-sm-6 main-content">
-    
-</div>
+<div class="hist_search">
+</div>	
+
+
 
 {% endblock %}
