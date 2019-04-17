@@ -17,13 +17,14 @@ import importlib.util
 from apscheduler.schedulers.background import BackgroundScheduler
 import time
 import os
+import random
 
 from . import bdd
 
 class autoperform():
     def __init__(self):
         scheduler = BackgroundScheduler()
-        scheduler.add_job(self.job, 'interval', days=1)
+        scheduler.add_job(self.job, 'interval', minutes=1)
         scheduler.start()
 
     def job(self):
@@ -35,6 +36,10 @@ class autoperform():
         for pipe in all_pipes:
             pipeline, modele, features, target, data = get_pipelines("static/pipelines/", pipe)
             data = load_data("static/data/{}".format(data))
+            # Code à utiliser simplement pour la présentation
+            data = data.sample(frac=0.95,random_state = random.randint(0,1000))
+            data.reset_index(drop = True, inplace = True)
+            # Code à utiliser simplement pour la présentation
             compute_performance(pipeline, modele, df=data, features=features ,target=target)
 
 
