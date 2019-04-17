@@ -130,6 +130,14 @@ html,body {
     right: 0;
 }
 
+.no_graph form {
+    position: absolute;
+    margin: auto;
+    bottom: 15%;
+    left: 0;
+    right: 0;
+}
+
 .main-analysis {
     border: 1px solid gray;
 }
@@ -184,6 +192,7 @@ html,body {
     color:gray;
 }
 
+<<<<<<< HEAD
 .hist_container {
   padding : 5px;
   overflow : auto;
@@ -213,87 +222,214 @@ html,body {
 
 <<<<<<< HEAD
 
+=======
+>>>>>>> 2acb770dee8c6080204aeef63c07c3a7a17054df
 /* Message flashing */
 .flash {
   background-color: #FBB0B0;
   padding: 20px;
   width: 100%;
-=======
+}
+
 input {
     height:30px;
     background-color: darkslategray;
     color:white;
     border-radius:50px;
     border:1px solid black;
+}
+
+.update-button {
     padding-left: 10%;
     padding-right: 10%;
     margin-left: 20%;
 }
 
+.update-button:hover {
+    background-color: #222d22;
+}
+
+.select-button {
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.select-button:hover {
+    background-color: #222d22;
+}
+
 .formfield-select--container {
     position: relative; 
-    width:50%;
-    float:right;
-    margin-right:15%;
-	
 	background-color: darkslategray;
     border: #777 1px solid;
     border-radius:50px;
-	
-	overflow: hidden; 
-	/* 
-		Le select natif pourra 
-		dépasser sans être vu 
+
+	overflow: hidden;
+	/*
+		Le select natif pourra
+		dépasser sans être vu
 	*/
+}
+
+.formfield-select--container select:hover {
+    background-color: #222d22;
 }
 
 .formfield-select--container select {
 	-webkit-appearance: none;
 	-moz-appearance: none;
     appearance: none;
-    
+
     background-color:darkslategray;
     color:white;
 
     height:30px !important;
-	width: 100%; 
-	/* 
+	width: 100%;
+	/*
 		On est sûr de ne plus voir
-		la flèche native 
+		la flèche native
 	*/
-	
+
 	height: auto;
-	border: 0; 
+	border: 0;
 	margin: 0;
 	padding-left: 10%;
 	border-radius: 0;
-	
+
 
 	overflow: hidden;
 	text-overflow: ellipsis;
-	/* 
+	/*
 		On empêche le texte d'aller
 		jusqu'au bout s'il est trop long
 	*/
 
 }
 
-.formfield-select--container::after { 
+.formfield-select--container::after {
 	/* Le pointeur du select */
 	content: '';
 	position: absolute;
-	top: 50%; 
+	top: 50%;
 	margin-top: -3px;
-	right: .75em;  
-	display: block; 
+	right: .75em;
+	display: block;
 	width: 0; height: 0;
 	border-color: transparent;
-	border-top-color: white; 
+	border-top-color: white;
 	border-width: 6px;
 	border-style: solid;
 	pointer-events: none;
->>>>>>> c9d3c5f9e9d5c6b5b055750f0dec19f64c794e73
 }
+
+.select-field-with-graph {
+    width:50%;
+    float:right;
+    margin-right:15%;
+}
+
+.select-field-without-graph {
+    width:25%;
+    margin:auto;
+    margin-bottom:2%;
+}
+
+#add-header {
+    text-align:center;
+}
+
+.pipeline-form-select {
+    padding:0;
+}
+
+.pipeline-form-input {
+    padding:0;
+    text-align: center;
+}
+
+.pipeline-form-input input {
+    padding-left:10%;
+    padding-right:10%;
+}
+
+#pip-to-edit {
+    width:50%;
+    margin:auto;
+}
+
+#add-header {
+    height:10%;
+}
+
+#add-form {
+    height:5%%;
+}
+
+#add-main {
+    height:90%;
+}
+
+#add-sub-main {
+    height:60%;
+}
+
+#add-data {
+    height:100%;
+    /* display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    height: 100%;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center; */
+}
+
+#add-footer {
+    height:10%;
+    text-align: center;
+}
+
+#pipeline-editor-container {
+    margin-top:2%;
+}
+
+.pipeline-editor-text-center {
+    text-align:center;
+}
+
+#pipeline-editor-textarea{
+    margin-top:2%;
+    margin-bottom:2%;
+}
+
+#pipeline-editor-textarea div{
+    margin:auto;
+}
+
+#editor {
+    margin:auto;
+}
+
+#save-button {
+    padding-left:5%;
+    padding-right:5%;
+}
+
+#file-button {
+    height:unset;
+    margin:auto;
+}
+
+#test-button {
+    height:100%;
+    width:20%;
+    font-weight: bold;
+    font-size: 22px;
+}
+
 
 /* .modebar {
     display:none !important;

@@ -1,6 +1,5 @@
 from utils import bdd, graph
 
-
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -8,10 +7,31 @@ import datetime
 
 from sklearn.pipeline import Pipeline
 from sklearn.model_selection import cross_validate
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import classification_report
+from sklearn.metrics import precision_recall_fscore_support
 
 from os import listdir
 from os.path import isfile, join
 import importlib.util
+from apscheduler.schedulers.background import BackgroundScheduler
+import time
+
+from . import bdd
+
+class autoperform():
+    def __init__(self):
+        scheduler = BackgroundScheduler()
+        scheduler.add_job(self.job, 'interval', days=1)
+        scheduler.start()
+
+    def job(self):
+        all_pipes = get_all_pipes_names("static/pipelines")
+        all_pipes = ["pipe_test_1"]
+        for pipe in all_pipes:
+            pipeline, modele, features, target, data = get_pipelines("static/pipelines/", pipe)
+            data = load_data("static/data/{}".format(data))
+            compute_performance(pipeline, modele, df=data, features=features ,target=target)
 
 
 def add_metadata_property(obj, name):
@@ -39,6 +59,7 @@ def load_data(path):
     '''
     #On récupère le nom de l'extension du fichier
     type = path.split(".")[-1]
+
     #Selection de la bonne fonction de pandas à utiliser
     func_to_call = 'read_{}'.format(type)
 
@@ -92,7 +113,7 @@ def descript_df(dataframe):
     return display
 
 
-def compute_performance(pipeline, modele, df,  features, target, n, BDD=True):
+def compute_performance(pipeline, modele, df,  features, target, BDD=True):
     '''
         Permet d'appeler les bons indicateurs de performances et de récupérer
         les informations utiles selon la pipeline passé en paramètre. Retourne les
@@ -103,7 +124,6 @@ def compute_performance(pipeline, modele, df,  features, target, n, BDD=True):
             modele : type du modèle utilisé : régression/classification)
             features : colonnent à utiliser pour la régréssion
             target : colonne à prédire
-            n : nombre de bootstrap pour le calcul des intervalles de confiance
             BDD : booléen, pour True les résultats sont stockés dans la BDD pour
                   False ils ne sont pas sauvegardés
 
@@ -115,27 +135,25 @@ def compute_performance(pipeline, modele, df,  features, target, n, BDD=True):
     '''
     if (modele == "regression") :
         print("Choix du type d'estimateur : Régression \n")
-        result = compute_regression(pipeline, df, features, target, n)
-        #compute_performance(pipe_elias, "regression", data, ["age_range", "head_size"], ["brain_weight"], 100)
+        result = compute_regression(pipeline, df, features, target)
 
     elif(modele == "classification"):
         print("Choix du type d'estimateur : Classification \n")
-        result = compute_classification(pipeline, df)
-
+        result = compute_classification(pipeline, df, features, target)
     else:
         return -1
 
     if BDD == True:
         result['Time'] = datetime.datetime.now()
         result["_id"] = pipeline.name + "." + str(result['Time'])
-        mongo = MongoDB("database_pipeline")
+        result["Type"] = modele
+        mongo = bdd.MongoDB("database_pipeline")
         mongo.insert_one(pipeline.name, result)
 
-    else:
-        return -1
+    return result
 
 
-def compute_regression(pipeline, df, features, target, n):
+def compute_regression(pipeline, df, features, target):
     '''
         Permet d'obtenir les résultats des indicateurs de performances d'une régression par crossvalidation,
         et retourne ces derniers.
@@ -145,7 +163,6 @@ def compute_regression(pipeline, df, features, target, n):
             df : tuple des bases d'apprentissage et de test
             features : colonnent à utiliser pour la régréssion
             target : colonne à prédire
-            n : nombre de bootstrap pour le calcul des intervalles de confiance
             BDD : booléen, pour True les résultats sont stockés dans la BDD pour
                   False ils ne sont pas sauvegardés
         :return:
@@ -176,6 +193,49 @@ def compute_regression(pipeline, df, features, target, n):
     rmse = np.mean(np.sqrt(np.absolute(result["test_mse"])))
 
     result = {"r2": r2, "variance": variance, "rmse": rmse, "min_inter" : min_inter, "max_inter" : max_inter, "med_inter": med_inter}
+
+    return result
+
+def compute_classification(pipeline, df, features, target):
+    '''
+        Permet d'obtenir les résultats des indicateurs de performances d'une classification par crossvalidation,
+        et retourne ces derniers.
+
+        :params:
+            pipeline : object de type pipeline
+            df : tuple des bases d'apprentissage et de test
+            features : colonnes à utiliser pour la régréssion
+            target : colonne à prédire
+
+        :return:
+            Accuracy : score accuracy
+            F1 : f1 score
+            Precision : ratio TP/(TP+FP)
+            Recall : ratio TP/(TP+FN)
+    '''
+
+    # Critères de scoring
+    scoring = {"accuracy" : "accuracy",
+               "f1_score" : "f1_macro",
+               "precision" : "precision_macro",
+               "recall" : "recall_macro"}
+
+    # Cross Validation
+    result = cross_validate(pipeline, df[features], df[target], cv=7, scoring=scoring)
+
+    accuracy = np.mean(result["test_accuracy"])
+    f1_score = np.mean(result["test_f1_score"])
+    precision = np.mean(result["test_precision"])
+    recall = np.mean(result["test_recall"])
+
+
+    # Calcul de la Matrice de confusion
+    #matrice_confu = pd.crosstab(base[3], pred, rownames=['True'], colnames=['Predicted'], margins=True)
+    #C = np.array(matrice_confu)
+    #score = np.sum(np.diag(C)) / len(base[3]) - 1
+    #score_precision = (np.diag(C) / C[:,-1])[:-1]
+
+    result = {"Accuracy" : accuracy, "F1" : f1_score, "Precision" : precision, "Recall" : recall}
 
     return result
 
@@ -248,9 +308,14 @@ def get_pipelines(path, pipe_name):
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
 
+
     #import de la pipeline
     pipeline = module.pipeline
+    modele = module.modele
+    features = module.features
+    target = module.target
+    data = module.data
 
     # Ajout d'un nom à la pipeline
     add_metadata_property(pipeline, pipe_name)
-    return pipeline
+    return pipeline, modele, features, target, data

@@ -37,12 +37,12 @@
 <div id="no-pipeline-selected">Please select a pipeline to analyse
     <form action="" method="post" name="Graph">
         <div class="col-sm-6">
-            <p>
+            <div class="formfield-select--container select-field-without-graph">
                 {{pipelineForm.pipelineToAnalyse()}}
-            </p>
+            </div>
         </div>
         <div class="col-sm-6">
-            <input type=submit value="Select">
+            <input class="select-button" type=submit value="Select">
         </div>
     </form>
 </div>

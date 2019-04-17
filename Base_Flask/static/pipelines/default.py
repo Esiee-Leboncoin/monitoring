@@ -1,11 +1,14 @@
+from sklearn import svm
 from sklearn.pipeline import Pipeline
-
-#Ajouter tous les imports necessaires
 from sklearn.preprocessing import StandardScaler
-from sklearn import neighbors
 
-#Importer sa pipeline sans modifier le nom
+modele = "classification"
+features = ["Age Range", "Head Size(cm^3)"]
+target = ["Brain Weight(grams)"]
+data = "headbrain.csv"
+
 pipeline = Pipeline([
     ('features', StandardScaler()),
-    ('estimator', neighbors.KNeighborsRegressor())
+    ('estimator', svm.SVC())
 ])
+

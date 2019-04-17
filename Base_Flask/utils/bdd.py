@@ -59,6 +59,12 @@ class MongoDB():
         result = self.db[collection].map_reduce(map, reduce, "myresults")
         return result.distinct('_id')
 
+    def get_graph_type(self, collec_name, color):
+        if self.db[collec_name].find_one({'Type' : 'regression'}):
+            return self.get_graph_JSON(collec_name, 'RMSE', color, False)
+        else:
+            return self.get_graph_JSON(collec_name, 'Accuracy', color, False)
+
     def get_graph_JSON(self, collec_pipe_name, score_type, color, isAnalysis):
 
         pipe_data = self.db[collec_pipe_name].find()

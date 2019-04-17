@@ -2,13 +2,13 @@
 {% block content %}
 <html>
     <head>
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='add_pipeline.css') }}">
 
         <!-- include python mode for the editor -->
-        <link rel="stylesheet"  type="text/css" href="static/codemirror/lib/codemirror.css">
-        <link rel="stylesheet" type="text/css" href="static/codemirror/theme/monokai.css">
-        <script type="text/javascript" src="static/codemirror/lib/codemirror.js"></script>
-        <script type="text/javascript" src="static/codemirror/mode/python/python.js"></script>
+        <link rel="stylesheet"  type="text/css" href="../static/codemirror/lib/codemirror.css">
+        <link rel="stylesheet" type="text/css" href="../static/codemirror/theme/monokai.css">
+        <script type="text/javascript" src="../static/codemirror/lib/codemirror.js"></script>
+        <script type="text/javascript" src="../static/codemirror/mode/python/python.js"></script>
     </head>
 
     <body>
@@ -23,25 +23,56 @@
         </div>
         {% endblock %}
 
-        <form action="" method="post" name="pipe_wanted">
-            {{ formeditor.pipToEdit() }}
-            {{ formeditor.display }}
-            {{ formeditor.delete }}
-        </form>
+        <div id="add-header" class="row">
+            <h1 class="col-sm-6">Modifier/ajouter une pipeline</h1>
+            <h1 class="col-sm-6">Ajouter de nouvelles données</h1>
+        </div>
 
-        <form method="post">
-            <label for="name">Nom de la pipeline :</label>
-            <input type="text" name="pipe_name" value={{pipe_name}}>
-            <textarea id="editor" name="editordata">{{ default }}</textarea>
-            <script>
-                var editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
-                    theme: "monokai",
-                    lineNumbers: true,
-                    autoCloseTags: true
-                })
-                editor.setSize("500", "300")
-            </script>
-            <input type="submit" value="Enregistrer"/>
+        <div id="add-form" class="row">
+            <form id="pipeline-form-container" class="col-sm-6" action="" method="post" name="pipe_wanted">
+                <div class="col-sm-4 pipeline-form-select">
+                    <div id="pip-to-edit" class="formfield-select--container">
+                        {{ formeditor.pipToEdit() }}
+                    </div>
+                </div>
+                <div class="col-sm-4 pipeline-form-input">
+                    {{ formeditor.display }}
+                </div>
+                <div class="col-sm-4 pipeline-form-input">
+                    {{ formeditor.delete }}
+                </div>
+            </form>
+        </div>
+
+        <form id="add-main" class="row" method="post" enctype=multipart/form-data>
+            <div id="add-sub-main" class="row">
+                <div id="pipeline-editor-container" class="col-sm-6">
+                    <div class="row pipeline-editor-text-center">
+                        <label for="name">Nom de la pipeline :</label>
+                        <input type="text" name="pipe_name" value={{pipe_name}}>
+                    </div>
+                    <div id="pipeline-editor-textarea">
+                        <textarea id="editor" name="editordata">{{ default }}</textarea>
+                        <script>
+                            var editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
+                                theme: "monokai",
+                                lineNumbers: true,
+                                autoCloseTags: true
+                            })
+                            editor.setSize("500", "300");
+                        </script>
+                    </div>
+                    <div class="row pipeline-editor-text-center">
+                        <input id="save-button" type="submit" name="Enregistrer" value="Enregistrer"/>
+                    </div>
+                </div>
+                <div id="add-data" class="col-sm-6">
+                    <input id="file-button" type=file name=file>
+                </div>
+            </div>
+            <div id="add-footer" class="row">
+                <input id="test-button" type="submit" name="Test" value="Lancer Test"/>
+            </div>
         </form>
     </body>
 </html>
