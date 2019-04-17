@@ -37,7 +37,7 @@ class autoperform():
             pipeline, modele, features, target, data = get_pipelines("static/pipelines/", pipe)
             data = load_data("static/data/{}".format(data))
             # Code à utiliser simplement pour la présentation
-            data = data.sample(frac=0.95,random_state = random.randint(0,1000))
+            data = data.sample(n=int(len(data)/3*2), random_state = random.randint(0,len(data)))
             data.reset_index(drop = True, inplace = True)
             # Code à utiliser simplement pour la présentation
             compute_performance(pipeline, modele, df=data, features=features ,target=target)
@@ -227,7 +227,7 @@ def compute_regression(pipeline, df, features, target):
     scoring = {"variance" : "explained_variance",
                "r2" : "r2",
                "mse" : "neg_mean_squared_error"}
-    result = cross_validate(pipeline, data[features], data[target], cv=7, scoring=scoring)
+    result = cross_validate(pipeline, df[features], df[target], cv=5, scoring=scoring)
     variance = np.mean(result["test_variance"])
     r2 = np.mean(result["test_r2"])
     rmse = np.mean(np.sqrt(np.absolute(result["test_mse"])))
