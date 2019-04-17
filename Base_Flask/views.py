@@ -3,7 +3,7 @@ import pymongo
 from flask import Flask, render_template, url_for, request, session, redirect, flash
 
 import config
-from utils import bdd, graph, forms, pipelines
+from utils import bdd, forms, pipelines
 
 import numpy as np
 
@@ -258,7 +258,7 @@ def add_pipeline():
                         data = data.sample(frac=0.95,random_state = random.randint(0,1000))
                         data.reset_index(drop = True, inplace = True)
                         # Code à utiliser simplement pour la présentation
-                        
+
                         pipelines.compute_performance(pipeline, modele, df=data, features=features ,target=target)
                         #except Exception as e:
                         #    flash(e)

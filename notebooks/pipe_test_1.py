@@ -1,13 +1,13 @@
-from sklearn import svm
 from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LinearRegression
+from sklearn.decomposition import PCA
 
-modele = "classification"
+modele = "regression"
 features = ["Age Range", "Head Size(cm^3)"]
 target = ["Brain Weight(grams)"]
 data = "headbrain.csv"
 
 pipeline = Pipeline([
-    ('features', StandardScaler()),
-    ('estimator', svm.SVC())  
+    ('features', PCA()),
+    ('estimator', LinearRegression())  
 ])

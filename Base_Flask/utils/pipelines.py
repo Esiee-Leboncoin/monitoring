@@ -1,4 +1,4 @@
-from utils import bdd, graph
+from utils import bdd
 
 import matplotlib.pyplot as plt
 import numpy as np
