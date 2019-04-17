@@ -16,6 +16,7 @@ from os.path import isfile, join
 import importlib.util
 from apscheduler.schedulers.background import BackgroundScheduler
 import time
+import os
 
 from . import bdd
 
@@ -27,11 +28,41 @@ class autoperform():
 
     def job(self):
         all_pipes = get_all_pipes_names("static/pipelines")
-        all_pipes = ["pipe_test_1"]
+        try :
+            l.remove("default")
+        except:
+            pass
         for pipe in all_pipes:
             pipeline, modele, features, target, data = get_pipelines("static/pipelines/", pipe)
             data = load_data("static/data/{}".format(data))
             compute_performance(pipeline, modele, df=data, features=features ,target=target)
+
+
+def save(pipe_name, path, contenu):
+    '''
+        Permet d'ajouter la pipeline passé en paramètre dans le path du dossier
+        passé en paramètre.
+    '''
+    if pipe_name[-3:] != ".py":
+        pipe_name += ".py"
+
+    with open(path+pipe_name, 'w+') as f:
+        f.write(contenu)
+
+def delete(pipe_name, path):
+    '''
+        Permet de supprimé la pipeline passé en paramètre (contenu dans le path du dossier
+        passé en paramètre).
+    '''
+    os.remove(path+pipe_name+".py")
+
+def txt(pipe_name, path):
+    '''
+        Renvoie le contenu texte du fichier contenant la pipeline passé en paramètre
+        (contenu dans le path du dossier passé en paramètre).
+    '''
+    with open(path+pipe_name+".py", 'r') as f:
+        return f.read()
 
 
 def add_metadata_property(obj, name):
@@ -278,21 +309,17 @@ def bootstrap(pipeline, data, features, target, n):
 
 def get_all_pipes_names(path):
     '''
-        Liste  tous les fichiers contenus dans le dossier passé en paramètre.
+        Liste  tous les fichiers (avec extensions) contenus dans le dossier passé en paramètre.
 
         :return: liste contenant les noms des fichiers sans l'extension
     '''
-    l = [f[:-3] for f in listdir(path) if isfile(join(path, f))]
-    try :
-        l.remove("default")
-    except:
-        pass
+    l = [f for f in listdir(path) if isfile(join(path, f))]
     return l
 
 
 def get_pipelines(path, pipe_name):
     '''
-        Charge la pipeline dont le nom est passé en paramètre. Et lui
+        Charge la pipeline dont le nom du fichier est passé en paramètre (avec extension). Et lui
         rajoute un atribut name contenant son nom.
 
         :params:
@@ -302,9 +329,14 @@ def get_pipelines(path, pipe_name):
         :type params:
             pipe_name: str
 
-        :return: object contenant la pipeline
+        :return:
+            pipeline: objet contenant la pipeline
+            modele: régression ou classification
+            features: liste des features
+            target: liste des target
+            data: nom du fichier (str) cotenant les données
     '''
-    spec = importlib.util.spec_from_file_location("module.name", path+pipe_name+".py")
+    spec = importlib.util.spec_from_file_location("module.name", path+pipe_name)
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
 

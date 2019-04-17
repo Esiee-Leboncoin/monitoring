@@ -170,77 +170,85 @@ def deconnection():
 @app.route('/add_pipeline', methods=['POST', 'GET'])
 def add_pipeline():
     if 'username' in session:
+
         formeditor = forms.PipelineSelectEditor(request.form)
-
-        with open("static/pipelines/default.py", 'r') as f:
-            default = f.read()
-
-        if formeditor.validate():
-            pipe_name = formeditor.pipToEdit.data
-
-            if formeditor.display.data == True:
-                with open("static/pipelines/{}".format(pipe_name+".py"), 'r') as f:
-                    pipeline = f.read()
-                return render_template('add_pipeline.html', pipe_name = pipe_name, default = pipeline, formeditor = formeditor,
-                                        username = session['username'], active_item="active_add")
-
-            if formeditor.delete.data == True:
-                os.remove("static/pipelines/{}".format(pipe_name+".py"))
-                forms.UpdateEditor(formeditor)
-                flash("Pipeline supprimé")
-
-            return render_template('add_pipeline.html', pipe_name = "default", default = default, formeditor = formeditor,
-                                    username = session['username'], active_item="active_add")
-
+        default = pipelines.txt("default", "static/pipelines/")
 
         if request.method == 'POST':
-            editordata = request.form.get("editordata")
-            pipe = request.form.get("pipe_name")
+            if formeditor.validate():
+                pipe_name = formeditor.pipToEdit.data
 
+                if formeditor.display.data == True:
+                    pipeline = pipelines.txt(pipe_name, "static/pipelines/")
+                    return render_template('add_pipeline.html', pipe_name = pipe_name, default = pipeline, formeditor = formeditor,
+                                            username = session['username'], active_item="active_add")
 
+                if formeditor.delete.data == True:
+                    if pipe_name == "default":
+                        flash("Vous ne pouvez pas supprimer cette pipeline")
+                        return render_template('add_pipeline.html', pipe_name = "default", default = default, formeditor = formeditor,
+                                                username = session['username'], active_item="active_add")
+                    pipelines.delete(pipe_name, "static/pipelines/")
+                    forms.UpdateEditor(formeditor)
+                    flash("Pipeline supprimé")
+                    return render_template('add_pipeline.html', pipe_name = "default", default = default, formeditor = formeditor,
+                                            username = session['username'], active_item="active_add")
+
+            #Enregistre seulement la pipeline
+            if request.form.get('Enregistrer'):
+
+                editordata = request.form.get("editordata")
+                pipe_name = request.form.get("pipe_name")
+
+                pipelines.save(pipe_name, "static/pipelines/", editordata)
+                forms.UpdateEditor(formeditor)
+                flash("Pipeline {} importée".format(pipe_name))
+
+                if pipe_name[-3:] == ".py":
+                    pipe_name = pipe_name[:-3]
+
+                return render_template('add_pipeline.html',  pipe_name = pipe_name, default = editordata, formeditor = formeditor,
+                                        username = session['username'], active_item="active_add")
+
+            #Enregistre seulement la pipeline puis effectue les caluls de performance dessus
             if request.form.get('Test'):
 
-                if pipe[-3:] != ".py":
-                    pipe = pipe + ".py"
+                editordata = request.form.get("editordata")
+                pipe = request.form.get("pipe_name")
 
-                with open("static/pipelines/{}".format(pipe), 'w+') as f:
-                    f.write(editordata)
-                    forms.UpdateEditor(formeditor)
-                    flash("Pipeline importée")
-
-                if pipe[-3:] == ".py":
-                    pipe = pipe[:-3]
+                pipelines.save(pipe_name, "static/pipelines/", editordata)
+                forms.UpdateEditor(formeditor)
+                flash("Pipeline {} importée".format(pipe_name))
 
                 if 'file' not in request.files:
                     flash('Pas de fichier')
+
                 else:
                     file = request.files['file']
 
                     if file.filename == '':
                         flash('Fichier sans extension')
 
-                    if file and allowed_file(file.filename):
+                    elif file and allowed_file(file.filename):
                         filename = secure_filename(file.filename)
                         file.save("static/data/{}".format(filename))
                         flash('Fichier importé')
 
-                        pipeline, modele, features, target = pipelines.get_pipelines("static/pipelines/", pipe)
-                        data = pipelines.load_data("static/data/{}".format(filename))
-                        pipelines.compute_performance(pipeline, modele, df=data, features=features ,target=target)
+                        #Calcul des performances
+                        try:
+                            pipeline, modele, features, target, data = pipelines.get_pipelines("static/pipelines/", pipe)
+                            data = pipelines.load_data("static/data/{}".format(filename))
+                            pipelines.compute_performance(pipeline, modele, df=data, features=features ,target=target)
+                        except Exception as e:
+                            flash(e)
                     else:
                         flash('Fichier non pris en charge')
 
-            else:
-                if pipe[-3:] != ".py":
-                    pipe = pipe + ".py"
+                    return render_template('add_pipeline.html',  pipe_name = pipe, default = editordata, formeditor = formeditor,
+                                            username = session['username'], active_item="active_add")
 
-                with open("static/pipelines/{}".format(pipe), 'w+') as f:
-                    f.write(editordata)
-                    forms.UpdateEditor(formeditor)
-                    flash("Pipeline importée")
-
-
-        return render_template('add_pipeline.html', pipe_name = "default", default = default, formeditor = formeditor, active_item="active_add")
+        return render_template('add_pipeline.html', pipe_name = "default", default = default, formeditor = formeditor,
+                                username = session['username'], active_item="active_add")
 
     return render_template('index.html')
 
