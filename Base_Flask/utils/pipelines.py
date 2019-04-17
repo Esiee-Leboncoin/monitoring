@@ -201,10 +201,9 @@ def compute_regression(pipeline, df, features, target):
         :params:
             pipeline : object de type pipeline
             df : tuple des bases d'apprentissage et de test
-            features : colonnent à utiliser pour la régréssion
+            features : colonnes à utiliser pour la régréssion
             target : colonne à prédire
-            BDD : booléen, pour True les résultats sont stockés dans la BDD pour
-                  False ils ne sont pas sauvegardés
+
         :return:
             r2 : score R2
             variance : variance gloable expliquée par le modèle
@@ -227,12 +226,12 @@ def compute_regression(pipeline, df, features, target):
     scoring = {"variance" : "explained_variance",
                "r2" : "r2",
                "mse" : "neg_mean_squared_error"}
-    result = cross_validate(pipeline, df[features], df[target], cv=5, scoring=scoring)
+    result = cross_validate(pipeline, df[features], df[target], cv=7, scoring=scoring)
     variance = np.mean(result["test_variance"])
     r2 = np.mean(result["test_r2"])
     rmse = np.mean(np.sqrt(np.absolute(result["test_mse"])))
 
-    result = {"r2": r2, "variance": variance, "rmse": rmse, "min_inter" : min_inter, "max_inter" : max_inter, "med_inter": med_inter}
+    result = {"R2": r2, "Variance": variance, "RMSE": rmse, "min_inter" : min_inter, "max_inter" : max_inter, "med_inter" : med_inter}
 
     return result
 
