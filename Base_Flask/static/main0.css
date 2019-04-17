@@ -1,0 +1,445 @@
+html,body {
+    height:100%;
+    width:100%;
+    margin:auto;
+    overflow: hidden;
+}
+
+#active_home {
+    background-color:#5A5560;
+}
+
+#active_analysis {
+    background-color:#5A5560;
+}
+
+#active_history {
+    background-color:#5A5560;
+}
+
+#active_add {
+    background-color:#5A5560;
+}
+
+.btn {
+    background-color:#46344E;
+}
+
+.btn:hover {
+    background-color: #5A5560;
+}
+
+#title {
+    text-align:center;
+}
+
+#title-bar {
+    width:100%;
+    background-color: #46344E;
+}
+
+#title-content {
+    height:100%;
+    padding:0;
+    border-right:1px solid black;
+}
+
+.top-link-style {
+    color:white;
+}
+
+#navbar {
+    float:right;
+    padding-right:0;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    color: white    ;
+}
+
+.navbar-brand:hover, .navbar-brand:focus {
+    color:#FAED26;
+}
+
+
+#main {
+    width:100%;
+    height:95%;
+}
+
+.main-content {
+    height:100%;
+    padding:0;
+}
+
+.sidebar-content {
+    height:100%;
+    padding:0;
+    background-color: #46344E;
+    border: 1px solid black;
+}
+
+.side-item {
+    border-bottom:1px black solid;
+}
+
+.side-item > a {
+    color:white;
+}
+
+.nav > li >a:hover, .nav > li >a:focus {
+    color:white;
+    background-color: #5A5560;
+}
+
+.row {
+    margin:0;
+}
+
+.chart {
+    height:85%;
+}
+
+.chart-rows {
+    height:50%;
+}
+
+#chart-section {
+    height:100%;
+}
+
+.chart-block {
+    height:100%;
+    width:50%;
+    border:1px solid gray;
+}
+
+.no_graph {
+    height:100%;
+    text-align:center;
+}
+
+.no_graph img {
+    width:100px;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.no_graph form {
+    position: absolute;
+    margin: auto;
+    bottom: 15%;
+    left: 0;
+    right: 0;
+}
+
+.main-analysis {
+    border: 1px solid gray;
+}
+
+.analysis-block {
+    height:50%;
+    width:100%;
+    margin:auto;
+    text-align: center;
+}
+
+#pipeline-title {
+    font-size:20px;
+    line-height:60px;
+    width:100%;
+    color:gray;
+}
+
+.pipeline-field {
+    height:60%;
+    width:60%;
+    margin:auto;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius:50%;
+    border: 2px solid black;
+    color:white;
+}
+
+#green-field {
+    background-color: green;
+}
+
+#orange-field {
+    background-color: orange;
+}
+
+#red-field {
+    background-color: red;
+}
+
+#pipeline-score {
+    margin:auto;
+    font-size:45px;
+}
+
+#pipeline-score-description {
+    font-size:20px;
+    line-height:60px;
+    width:100%;
+    color:gray;
+}
+
+.hist_container {
+  padding : 5px;
+  overflow : auto;
+  height : 100%;
+  width : 100%;
+  float : left;
+}
+.history_cell {
+  background-color: #5A5560;
+  width: auto;
+  border: 1px solid black;
+  padding: 5px;
+  margin: 2%;
+  border-radius : 40px;
+  font-size : 12px;
+  color : white;
+  text-align : center;
+}
+.history_cell h1 {
+  font-size : 16px;
+}
+.history_cell h2 {
+  font-style : italic;
+  font-size : 12px;
+}
+
+
+/* Message flashing */
+.flash {
+  background-color: rgb(199, 187, 187);
+  padding: 20px;
+  width: 100%;
+}
+
+input {
+    height:30px;
+    background-color: #9B786F;
+    color:white;
+    border-radius:50px;
+    border:1px solid black;
+}
+
+.update-button {
+    padding-left: 10%;
+    padding-right: 10%;
+    margin-left: 20%;
+}
+
+.update-button:hover {
+    background-color: #9B786F;
+}
+
+.select-button {
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.select-button:hover {
+    background-color: #9B786F;
+}
+
+.formfield-select--container {
+    position: relative;
+	background-color: #5A5560;
+    border: #777 1px solid;
+    border-radius:50px;
+
+	overflow: hidden;
+	/*
+		Le select natif pourra
+		dépasser sans être vu
+	*/
+}
+
+.formfield-select--container select:hover {
+    background-color: #5A5560;
+}
+
+.formfield-select--container select {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+    appearance: none;
+
+    background-color: #5A5560;
+    color:white;
+
+    height:30px !important;
+	width: 100%;
+	/*
+		On est sûr de ne plus voir
+		la flèche native
+	*/
+
+	height: auto;
+	border: 0;
+	margin: 0;
+	padding-left: 10%;
+	border-radius: 0;
+
+
+	overflow: hidden;
+	text-overflow: ellipsis;
+	/*
+		On empêche le texte d'aller
+		jusqu'au bout s'il est trop long
+	*/
+
+}
+
+.formfield-select--container::after {
+	/* Le pointeur du select */
+	content: '';
+	position: absolute;
+	top: 50%;
+	margin-top: -3px;
+	right: .75em;
+	display: block;
+	width: 0; height: 0;
+	border-color: transparent;
+	border-top-color: white;
+	border-width: 6px;
+	border-style: solid;
+	pointer-events: none;
+}
+
+.select-field-with-graph {
+    width:50%;
+    float:right;
+    margin-right:15%;
+}
+
+.select-field-without-graph {
+    width:25%;
+    margin:auto;
+    margin-bottom:2%;
+}
+
+#add-header {
+    text-align:center;
+}
+
+.pipeline-form-select {
+    padding:0;
+}
+
+.pipeline-form-input {
+    padding:0;
+    text-align: center;
+}
+
+.pipeline-form-input input {
+    padding-left:10%;
+    padding-right:10%;
+}
+
+#pip-to-edit {
+    width:50%;
+    margin:auto;
+}
+
+#add-header {
+    height:10%;
+}
+
+#add-form {
+    height:5%%;
+}
+
+#add-main {
+    height:90%;
+}
+
+#add-sub-main {
+    height:60%;
+}
+
+#add-data {
+    height:100%;
+    /* display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    height: 100%;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center; */
+}
+
+#add-footer {
+    height:10%;
+    text-align: center;
+}
+
+#pipeline-editor-container {
+    margin-top:2%;
+}
+
+.pipeline-editor-text-center {
+    text-align:center;
+}
+
+#pipeline-editor-textarea{
+    margin-top:2%;
+    margin-bottom:2%;
+}
+
+#pipeline-editor-textarea div{
+    margin:auto;
+}
+
+#editor {
+    margin:auto;
+}
+
+#save-button {
+    height:10%;
+    width:20%;
+    font-weight: bold;
+    font-size: 18px;
+    position: absolute;
+    left: 80px;
+}
+
+#file-button {
+    height:unset;
+    margin:auto;
+}
+
+#test-button {
+    height:10%;
+    width:20%;
+    font-weight: bold;
+    font-size: 18px;
+    position: absolute;
+    right: 200px;
+}
+
+
+/* .modebar {
+    display:none !important;
+} */
+
+/* #link {
+    height:75%;
+    width:100%;
+    position:absolute;
+    top:10%;
+    z-index: 10;
+} */
